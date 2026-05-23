@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Galeri Kegiatan — SMK Ciledug Al-Musaddadiyah</title>
+<meta name="description" content="Galeri foto dan video kegiatan SMKS Ciledug Al-Musaddadiyah Garut."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,700;0,800;0,900;1,900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --blue-deep:#0b3d91;--blue-mid:#1565c0;--blue-bright:#1e88e5;--blue-light:#42a5f5;
+  --blue-pale:#e3f2fd;--sky:#bbdefb;--cream:#f5f9ff;--white:#fff;
+  --text-dark:#0d1b3e;--text-mid:#2c4a7c;--text-muted:#607d9e;
+  --gold:#ffb300;--gold-light:#ffd54f;
+  --shadow:0 4px 24px rgba(21,101,192,.12);--shadow-lg:0 12px 48px rgba(21,101,192,.18);
+  --radius:16px;--radius-sm:10px;
+  --transition:.2s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;line-height:1.6}
+h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;line-height:1.15}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+/* ── NAV ── */
+#site-nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:60px;
+  background:rgba(11,61,145,.96);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(66,165,245,.15);
+  transition:box-shadow var(--transition);
+}
+#site-nav.scrolled{box-shadow:0 4px 32px rgba(11,61,145,.5)}
+.nav-inner{
+  max-width:1200px;margin:0 auto;padding:0 20px;
+  height:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.nav-brand{display:flex;align-items:center;gap:10px;color:#fff;flex-shrink:0}
+.nav-brand-icon{
+  width:34px;height:34px;border-radius:9px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue-bright),var(--blue-light));
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+}
+.nav-brand-text span:first-child{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;font-weight:900;color:#fff;line-height:1.2}
+.nav-brand-text span:last-child{display:block;font-size:9.5px;color:var(--sky);letter-spacing:.08em;text-transform:uppercase;line-height:1.2}
+.nav-right{display:flex;align-items:center;gap:8px}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--blue-deep);font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:800;font-size:12.5px;padding:8px 18px;border-radius:50px;
+  border:none;display:inline-flex;align-items:center;gap:6px;
+  box-shadow:0 4px 16px rgba(255,179,0,.35);
+  transition:transform var(--transition),box-shadow var(--transition);white-space:nowrap;
+}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,179,0,.45)}
+
+/* ── HERO ── */
+#gallery-hero{
+  min-height:340px;padding:90px 20px 52px;
+  background:linear-gradient(140deg,#061e5c 0%,#0b3d91 40%,#1565c0 72%,#1e88e5 100%);
+  position:relative;overflow:hidden;display:flex;align-items:center;
+}
+#gallery-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+.hero-glow{
+  position:absolute;width:540px;height:540px;border-radius:50%;
+  background:radial-gradient(circle,rgba(66,165,245,.16) 0%,transparent 70%);
+  top:-180px;right:-80px;pointer-events:none;
+}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;position:relative;z-index:2;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,179,0,.12);border:1px solid rgba(255,179,0,.35);
+  color:var(--gold-light);padding:5px 14px;border-radius:50px;
+  font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;
+}
+#gallery-hero h1{
+  font-size:clamp(24px,4.5vw,52px);font-weight:900;color:#fff;
+  letter-spacing:-.02em;margin-bottom:10px;
+}
+#gallery-hero h1 em{color:var(--gold-light);font-style:italic}
+#gallery-hero p{font-size:14.5px;color:rgba(255,255,255,.72);max-width:520px;line-height:1.8;margin-bottom:28px}
+
+.hero-stats-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.hero-stat-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);
+  border-radius:50px;padding:8px 18px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.hero-stat-pill .num{font-size:18px;font-weight:900;color:var(--gold-light);line-height:1}
+.hero-stat-pill .lbl{font-size:11px;color:rgba(255,255,255,.6)}
+
+/* ── FILTER SECTION ── */
+.filter-wrap{
+  background:var(--white);
+  border-bottom:1px solid rgba(21,101,192,.1);
+  position:sticky;top:60px;z-index:100;
+  box-shadow:0 2px 12px rgba(21,101,192,.07);
+}
+.filter-inner{
+  max-width:1200px;margin:0 auto;padding:14px 20px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+}
+.filter-label{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);margin-right:4px;white-space:nowrap;
+}
+.filter-btn{
+  padding:7px 18px;border-radius:50px;
+  border:1.5px solid rgba(21,101,192,.18);
+  background:transparent;
+  color:var(--text-mid);font-family:'DM Sans',sans-serif;
+  font-size:13px;font-weight:600;
+  transition:all var(--transition);white-space:nowrap;
+}
+.filter-btn:hover{border-color:var(--blue-bright);color:var(--blue-bright);background:var(--blue-pale)}
+.filter-btn.active{
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));
+  border-color:var(--blue-deep);color:#fff;
+  box-shadow:0 4px 14px rgba(21,101,192,.3);
+}
+.filter-sep{width:1px;height:22px;background:rgba(21,101,192,.12);margin:0 4px}
+
+/* ── MAIN CONTENT ── */
+.gallery-main{max-width:1200px;margin:0 auto;padding:36px 20px 72px}
+
+.gallery-section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:22px;flex-wrap:wrap;gap:10px;
+}
+.section-label{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue-bright);margin-bottom:6px;
+}
+.section-label::before{content:'';width:18px;height:2px;background:var(--blue-bright);border-radius:2px}
+.gallery-section-head h2{font-size:20px;font-weight:800;color:var(--text-dark)}
+.count-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--blue-pale);color:var(--blue-mid);
+  font-size:11.5px;font-weight:700;padding:5px 14px;border-radius:50px;
+}
+
+/* ── GRID ── */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:18px;
+}
+
+/* ── CARD ── */
+.g-card{
+  background:var(--white);border-radius:var(--radius);
+  border:1px solid rgba(21,101,192,.09);
+  overflow:hidden;cursor:pointer;
+  box-shadow:var(--shadow);
+  transition:transform var(--transition),box-shadow var(--transition),opacity .3s ease;
+  animation:cardIn .5s ease both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.g-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.g-card.hidden{display:none}
+.g-card.wide{grid-column:span 2}
+@media(max-width:640px){.g-card.wide{grid-column:span 1}}
+
+/* thumb */
+.g-thumb{
+  position:relative;aspect-ratio:16/9;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.g-card.wide .g-thumb{aspect-ratio:21/9}
+.g-thumb.ekskul   {background:linear-gradient(135deg,#0b3d91 0%,#1565c0 50%,#2e7d32 100%)}
+.g-thumb.jurusan  {background:linear-gradient(135deg,#0b3d91 0%,#1565c0 50%,#6a1b9a 100%)}
+.g-thumb.event    {background:linear-gradient(135deg,#0b3d91 0%,#e65100 70%,#ffb300 100%)}
+.g-thumb.prestasi {background:linear-gradient(135deg,#0b3d91 0%,#1565c0 50%,#ffb300 100%)}
+.g-thumb.alumni   {background:linear-gradient(135deg,#061e5c 0%,#0b3d91 50%,#ffb300 100%)}
+.g-thumb.fasilitas{background:linear-gradient(135deg,#0b3d91 0%,#1565c0 50%,#0097a7 100%)}
+
+/* stripe overlay */
+.g-thumb::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 14px);
+}
+.thumb-icon{font-size:52px;opacity:.3;position:relative;z-index:1;transition:transform .3s ease,opacity .3s ease;filter:drop-shadow(0 4px 10px rgba(0,0,0,.3))}
+.g-card:hover .thumb-icon{transform:scale(1.12);opacity:.5}
+
+/* badges on thumb */
+.badge-video{
+  position:absolute;top:10px;left:10px;
+  background:rgba(255,179,0,.92);color:#061e5c;
+  font-size:10px;font-weight:800;padding:3px 9px;border-radius:5px;
+  letter-spacing:.07em;text-transform:uppercase;
+  display:flex;align-items:center;gap:3px;
+}
+.badge-video::before{content:'▶';font-size:8px}
+.badge-cat{
+  position:absolute;top:10px;right:10px;
+  background:rgba(11,61,145,.8);border:1px solid rgba(66,165,245,.25);
+  color:var(--gold-light);font-size:10px;font-weight:700;
+  padding:3px 10px;border-radius:5px;letter-spacing:.08em;text-transform:uppercase;
+  backdrop-filter:blur(6px);
+}
+
+/* hover overlay */
+.g-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(6,30,92,.93) 0%,rgba(6,30,92,.5) 50%,transparent 100%);
+  opacity:0;transition:opacity .3s ease;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:16px;
+}
+.g-card:hover .g-overlay{opacity:1}
+.g-ov-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:#fff;margin-bottom:3px}
+.g-ov-sub{font-size:11px;color:rgba(255,179,0,.85);letter-spacing:.04em}
+.g-ov-btn{
+  margin-top:12px;padding:7px 0;width:100%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--blue-deep);font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:800;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  border:none;border-radius:8px;
+  transition:box-shadow .2s ease;
+}
+.g-ov-btn:hover{box-shadow:0 4px 16px rgba(255,179,0,.5)}
+
+/* card body */
+.g-body{padding:14px 16px 16px}
+.g-body-cat{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--blue-bright);margin-bottom:5px;
+}
+.g-body-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:14.5px;font-weight:800;color:var(--text-dark);margin-bottom:4px;line-height:1.3}
+.g-body-desc{font-size:12px;color:var(--text-muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.g-body-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.g-type-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 10px;border-radius:50px;font-size:10.5px;font-weight:700;
+}
+.g-type-pill.foto{background:var(--blue-pale);color:var(--blue-mid)}
+.g-type-pill.video{background:#fff8e1;color:#e65100}
+
+/* ── EMPTY STATE ── */
+.empty-state{
+  display:none;flex-direction:column;align-items:center;
+  padding:80px 24px;color:var(--text-muted);gap:12px;
+  grid-column:1/-1;text-align:center;
+}
+.empty-state .ei{font-size:52px;opacity:.4}
+.empty-state p{font-size:15px;font-weight:600}
+
+/* ── LIGHTBOX ── */
+.lightbox{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(6,30,92,.92);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s ease;padding:20px;
+}
+.lightbox.open{opacity:1;pointer-events:all}
+.lb-card{
+  max-width:640px;width:100%;background:var(--white);border-radius:20px;
+  overflow:hidden;transform:scale(.93);
+  transition:transform .3s cubic-bezier(.25,.46,.45,.94);
+  box-shadow:0 40px 100px rgba(11,61,145,.4);
+}
+.lightbox.open .lb-card{transform:scale(1)}
+.lb-thumb{
+  height:240px;display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.lb-thumb .lb-icon{font-size:80px;opacity:.4;position:relative;z-index:1}
+.lb-close{
+  position:absolute;top:12px;right:12px;
+  width:36px;height:36px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.2);
+  border-radius:50%;color:#fff;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,transform .2s;z-index:2;
+}
+.lb-close:hover{background:rgba(255,179,0,.35);transform:rotate(90deg)}
+.lb-body{padding:22px 26px 26px}
+.lb-cat-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.lb-cat-badge{
+  padding:3px 11px;border-radius:50px;background:var(--blue-pale);
+  color:var(--blue-mid);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+}
+.lb-type-badge{
+  padding:3px 11px;border-radius:50px;
+  font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+}
+.lb-type-badge.foto{background:#e3f2fd;color:#1565c0}
+.lb-type-badge.video{background:#fff8e1;color:#e65100}
+.lb-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:900;color:var(--text-dark);margin-bottom:8px}
+.lb-desc{font-size:13.5px;color:var(--text-muted);line-height:1.7}
+
+/* ── SCROLL TOP ── */
+.scroll-top{
+  position:fixed;bottom:26px;right:26px;z-index:500;
+  width:44px;height:44px;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));
+  color:#fff;border:none;border-radius:50%;font-size:18px;
+  box-shadow:0 4px 18px rgba(11,61,145,.4);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;
+}
+.scroll-top.visible{opacity:1;pointer-events:all}
+.scroll-top:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(11,61,145,.5)}
+
+/* ── FOOTER ── */
+footer{
+  background:linear-gradient(135deg,#061e5c 0%,#0b3d91 100%);
+  padding:40px 20px;text-align:center;
+  border-top:1px solid rgba(66,165,245,.12);
+}
+.footer-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:900;color:#fff;margin-bottom:4px}
+.footer-sub{font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.06em;margin-bottom:16px}
+.footer-calm{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,179,0,.12);border:1px solid rgba(255,179,0,.3);
+  color:var(--gold-light);padding:6px 18px;border-radius:50px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+}
+
+@media(max-width:720px){
+  .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+  #gallery-hero{padding:78px 16px 42px}
+  .filter-inner{padding:10px 16px}
+}
+@media(max-width:480px){
+  .gallery-grid{grid-template-columns:1fr}
+  .hero-stats-row{gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="nav-brand-icon">🏫</div>
+      <div class="nav-brand-text">
+        <span>SMK Ciledug Al-Musaddadiyah</span>
+        <span>Garut · Jawa Barat</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="btn-gold">🎓 Alumni CALM</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="gallery-hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">📸 Galeri Resmi</div>
+    <h1>Galeri <em>Kegiatan</em> Sekolah</h1>
+    <p>Dokumentasi foto dan video kegiatan SMKS Ciledug Al-Musaddadiyah — ekskul, prestasi, event, dan momen berharga lainnya.</p>
+    <div class="hero-stats-row">
+      <div class="hero-stat-pill"><span class="num" id="h-total">24</span><span class="lbl">Total Media</span></div>
+      <div class="hero-stat-pill"><span class="num" id="h-foto">18</span><span class="lbl">📸 Foto</span></div>
+      <div class="hero-stat-pill"><span class="num" id="h-video">6</span><span class="lbl">🎬 Video</span></div>
+      <div class="hero-stat-pill"><span class="num">6</span><span class="lbl">Kategori</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTER -->
+<div class="filter-wrap">
+  <div class="filter-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" data-filter="all">✦ Semua</button>
+    <div class="filter-sep"></div>
+    <button class="filter-btn" data-filter="ekskul">⚽ Ekskul</button>
+    <button class="filter-btn" data-filter="jurusan">🔧 Jurusan</button>
+    <button class="filter-btn" data-filter="event">🎉 Event</button>
+    <button class="filter-btn" data-filter="prestasi">🏆 Prestasi</button>
+    <button class="filter-btn" data-filter="alumni">🎓 Alumni</button>
+    <button class="filter-btn" data-filter="fasilitas">🏢 Fasilitas</button>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<main class="gallery-main">
+  <div class="gallery-section-head">
+    <div>
+      <div class="section-label">Dokumentasi</div>
+      <h2 id="sec-title">Semua Konten</h2>
+    </div>
+    <div class="count-badge" id="count-badge">📁 24 item</div>
+  </div>
+
+  <div class="gallery-grid" id="gallery-grid">
+
+    <!-- ── EKSKUL ── -->
+    <div class="g-card wide" data-cat="ekskul" data-type="foto" data-title="Latihan Futsal Ekskul" data-desc="Sesi latihan rutin tim futsal SMKS Ciledug Al-Musaddadiyah di lapangan sekolah setiap Sabtu pagi.">
+      <div class="g-thumb ekskul">
+        <span class="thumb-icon">⚽</span>
+        <span class="badge-cat">Ekskul</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Latihan Futsal Ekskul</div>
+          <div class="g-ov-sub">Ekskul · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">⚽ Ekskul</div>
+        <div class="g-body-title">Latihan Futsal Ekskul</div>
+        <div class="g-body-desc">Sesi latihan rutin tim futsal di lapangan sekolah setiap Sabtu pagi.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="ekskul" data-type="video" data-title="Paskibra HUT RI ke-79" data-desc="Penampilan tim Paskibra dalam upacara bendera HUT Kemerdekaan RI ke-79 yang berlangsung khidmat.">
+      <div class="g-thumb ekskul">
+        <span class="thumb-icon">🚩</span>
+        <span class="badge-video">Video</span>
+        <span class="badge-cat">Ekskul</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Paskibra HUT RI ke-79</div>
+          <div class="g-ov-sub">Ekskul · Video</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🚩 Ekskul</div>
+        <div class="g-body-title">Paskibra HUT RI ke-79</div>
+        <div class="g-body-desc">Penampilan tim Paskibra dalam upacara kemerdekaan yang berlangsung khidmat.</div>
+        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="ekskul" data-type="foto" data-title="Pramuka Camping" data-desc="Kegiatan berkemah pramuka di area Gunung Papandayan bersama anggota aktif tingkat Penegak.">
+      <div class="g-thumb ekskul">
+        <span class="thumb-icon">⛺</span>
+        <span class="badge-cat">Ekskul</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Pramuka Camping</div>
+          <div class="g-ov-sub">Ekskul · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">⛺ Ekskul</div>
+        <div class="g-body-title">Pramuka Camping</div>
+        <div class="g-body-desc">Kegiatan berkemah pramuka di area Gunung Papandayan bersama anggota aktif.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="ekskul" data-type="video" data-title="Penampilan Seni Tari Sunda" data-desc="Pertunjukan seni tari tradisional Sunda oleh ekskul seni budaya dalam acara pentas tahunan.">
+      <div class="g-thumb ekskul">
+        <span class="thumb-icon">💃</span>
+        <span class="badge-video">Video</span>
+        <span class="badge-cat">Ekskul</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Penampilan Seni Tari Sunda</div>
+          <div class="g-ov-sub">Ekskul · Video</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">💃 Ekskul</div>
+        <div class="g-body-title">Penampilan Seni Tari Sunda</div>
+        <div class="g-body-desc">Pertunjukan seni tari tradisional Sunda dalam acara pentas budaya tahunan.</div>
+        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
+      </div>
+    </div>
+
+    <!-- ── JURUSAN ── -->
+    <div class="g-card" data-cat="jurusan" data-type="foto" data-title="Praktikum Jaringan TKJ" data-desc="Siswa jurusan TKJ sedang melakukan praktikum konfigurasi jaringan komputer di laboratorium sekolah.">
+      <div class="g-thumb jurusan">
+        <span class="thumb-icon">💻</span>
+        <span class="badge-cat">Jurusan</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Praktikum Jaringan TKJ</div>
+          <div class="g-ov-sub">Jurusan · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">💻 Jurusan TKJ</div>
+        <div class="g-body-title">Praktikum Jaringan TKJ</div>
+        <div class="g-body-desc">Praktikum konfigurasi jaringan komputer di laboratorium sekolah.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card wide" data-cat="jurusan" data-type="foto" data-title="Workshop Tune-Up Otomotif" data-desc="Kegiatan praktik tune-up kendaraan di bengkel jurusan Teknik Kendaraan Ringan dengan peralatan industri.">
+      <div class="g-thumb jurusan">
+        <span class="thumb-icon">🔧</span>
+        <span class="badge-cat">Jurusan</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Workshop Tune-Up Otomotif</div>
+          <div class="g-ov-sub">Jurusan TKR · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🔧 Jurusan TKR</div>
+        <div class="g-body-title">Workshop Tune-Up Otomotif</div>
+        <div class="g-body-desc">Praktik tune-up kendaraan di bengkel jurusan TKR dengan peralatan standar industri.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="jurusan" data-type="video" data-title="Uji Kompetensi Keahlian" data-desc="Pelaksanaan UKK siswa kelas XII di hadapan penguji dari dunia industri dan dunia usaha.">
+      <div class="g-thumb jurusan">
+        <span class="thumb-icon">📋</span>
+        <span class="badge-video">Video</span>
+        <span class="badge-cat">Jurusan</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Uji Kompetensi Keahlian</div>
+          <div class="g-ov-sub">Jurusan · Video</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">📋 UKK</div>
+        <div class="g-body-title">Uji Kompetensi Keahlian</div>
+        <div class="g-body-desc">Pelaksanaan UKK kelas XII di hadapan penguji dari dunia industri.</div>
+        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="jurusan" data-type="foto" data-title="Praktik Akuntansi Dasar" data-desc="Siswa jurusan Akuntansi dan Keuangan Lembaga berlatih membuat laporan keuangan perusahaan.">
+      <div class="g-thumb jurusan">
+        <span class="thumb-icon">📊</span>
+        <span class="badge-cat">Jurusan</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Praktik Akuntansi Dasar</div>
+          <div class="g-ov-sub">Jurusan AKL · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">📊 Jurusan AKL</div>
+        <div class="g-body-title">Praktik Akuntansi Dasar</div>
+        <div class="g-body-desc">Siswa AKL berlatih menyusun laporan keuangan perusahaan secara langsung.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <!-- ── EVENT ── -->
+    <div class="g-card wide" data-cat="event" data-type="foto" data-title="Wisuda & Perpisahan Kelas XII" data-desc="Momen haru wisuda dan perpisahan kelas XII angkatan 2024 bersama orang tua, guru, dan seluruh warga sekolah.">
+      <div class="g-thumb event">
+        <span class="thumb-icon">🎓</span>
+        <span class="badge-cat">Event</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Wisuda & Perpisahan Kelas XII</div>
+          <div class="g-ov-sub">Event Sekolah · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🎓 Event</div>
+        <div class="g-body-title">Wisuda & Perpisahan Kelas XII</div>
+        <div class="g-body-desc">Momen haru wisuda dan perpisahan kelas XII angkatan 2024 bersama orang tua dan guru.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="event" data-type="video" data-title="Pentas Seni Tahunan 2024" data-desc="Rangkaian penampilan kreativitas siswa dalam Pentas Seni dan Budaya tahun 2024.">
+      <div class="g-thumb event">
+        <span class="thumb-icon">🎭</span>
+        <span class="badge-video">Video</span>
+        <span class="badge-cat">Event</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Pentas Seni Tahunan 2024</div>
+          <div class="g-ov-sub">Event · Video</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🎭 Event</div>
+        <div class="g-body-title">Pentas Seni Tahunan 2024</div>
+        <div class="g-body-desc">Penampilan kreativitas siswa dalam Pentas Seni dan Budaya 2024.</div>
+        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="event" data-type="foto" data-title="MPLS Peserta Didik Baru" data-desc="Masa Pengenalan Lingkungan Sekolah untuk peserta didik baru tahun pelajaran 2024/2025.">
+      <div class="g-thumb event">
+        <span class="thumb-icon">🎒</span>
+        <span class="badge-cat">Event</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">MPLS Peserta Didik Baru</div>
+          <div class="g-ov-sub">Event · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🎒 Event</div>
+        <div class="g-body-title">MPLS Peserta Didik Baru</div>
+        <div class="g-body-desc">MPLS untuk peserta didik baru tahun pelajaran 2024/2025.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="event" data-type="foto" data-title="Peringatan Hari Guru Nasional" data-desc="Upacara dan seremoni peringatan Hari Guru Nasional yang berlangsung penuh khidmat dan haru.">
+      <div class="g-thumb event">
+        <span class="thumb-icon">👨‍🏫</span>
+        <span class="badge-cat">Event</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Peringatan Hari Guru Nasional</div>
+          <div class="g-ov-sub">Event · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">👨‍🏫 Event</div>
+        <div class="g-body-title">Peringatan Hari Guru Nasional</div>
+        <div class="g-body-desc">Upacara dan seremoni Hari Guru Nasional yang berlangsung penuh khidmat.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <!-- ── PRESTASI ── -->
+    <div class="g-card" data-cat="prestasi" data-type="foto" data-title="Juara LKS Tingkat Provinsi" data-desc="Tim LKS SMKS Ciledug meraih medali emas di kompetisi Lomba Kompetensi Siswa Jawa Barat 2024.">
+      <div class="g-thumb prestasi">
+        <span class="thumb-icon">🥇</span>
+        <span class="badge-cat">Prestasi</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Juara LKS Tingkat Provinsi</div>
+          <div class="g-ov-sub">Prestasi · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🥇 Prestasi</div>
+        <div class="g-body-title">Juara LKS Tingkat Provinsi</div>
+        <div class="g-body-desc">Meraih medali emas di kompetisi LKS Jawa Barat 2024.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card wide" data-cat="prestasi" data-type="foto" data-title="Penerimaan Penghargaan Adiwiyata" data-desc="Sekolah menerima penghargaan Adiwiyata atas keberhasilan program peduli lingkungan hidup.">
+      <div class="g-thumb prestasi">
+        <span class="thumb-icon">🏆</span>
+        <span class="badge-cat">Prestasi</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Penerimaan Penghargaan Adiwiyata</div>
+          <div class="g-ov-sub">Prestasi Sekolah · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🏆 Prestasi</div>
+        <div class="g-body-title">Penerimaan Penghargaan Adiwiyata</div>
+        <div class="g-body-desc">Penghargaan Adiwiyata atas keberhasilan program peduli lingkungan hidup sekolah.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="prestasi" data-type="foto" data-title="OSN Bidang Matematika" data-desc="Siswa terpilih mewakili Kabupaten Garut di Olimpiade Sains Nasional bidang Matematika.">
+      <div class="g-thumb prestasi">
+        <span class="thumb-icon">🔢</span>
+        <span class="badge-cat">Prestasi</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">OSN Bidang Matematika</div>
+          <div class="g-ov-sub">Prestasi · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🔢 Prestasi</div>
+        <div class="g-body-title">OSN Bidang Matematika</div>
+        <div class="g-body-desc">Mewakili Kab. Garut di Olimpiade Sains Nasional bidang Matematika.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <!-- ── ALUMNI ── -->
+    <div class="g-card wide" data-cat="alumni" data-type="foto" data-title="Reuni Akbar Alumni CALM 2024" data-desc="Pertemuan akbar Alumni CALM — kumpul bersama para alumni lintas angkatan di aula sekolah tercinta.">
+      <div class="g-thumb alumni">
+        <span class="thumb-icon">🤝</span>
+        <span class="badge-cat">Alumni CALM</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Reuni Akbar Alumni CALM 2024</div>
+          <div class="g-ov-sub">Alumni CALM · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🎓 Alumni CALM</div>
+        <div class="g-body-title">Reuni Akbar Alumni CALM 2024</div>
+        <div class="g-body-desc">Pertemuan akbar alumni lintas angkatan di aula sekolah tercinta.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="alumni" data-type="video" data-title="Bakti Sosial Alumni CALM" data-desc="Kegiatan bakti sosial Alumni CALM memberikan beasiswa dan bantuan kepada siswa berprestasi dari keluarga kurang mampu.">
+      <div class="g-thumb alumni">
+        <span class="thumb-icon">❤️</span>
+        <span class="badge-video">Video</span>
+        <span class="badge-cat">Alumni CALM</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Bakti Sosial Alumni CALM</div>
+          <div class="g-ov-sub">Alumni CALM · Video</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">❤️ Alumni CALM</div>
+        <div class="g-body-title">Bakti Sosial Alumni CALM</div>
+        <div class="g-body-desc">Pemberian beasiswa dan bantuan kepada siswa berprestasi dari keluarga kurang mampu.</div>
+        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="alumni" data-type="foto" data-title="Halal Bihalal Alumni CALM" data-desc="Silaturahmi Idul Fitri yang mempertemukan alumni dari berbagai angkatan dalam suasana penuh keakraban.">
+      <div class="g-thumb alumni">
+        <span class="thumb-icon">🌙</span>
+        <span class="badge-cat">Alumni CALM</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Halal Bihalal Alumni CALM</div>
+          <div class="g-ov-sub">Alumni CALM · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🌙 Alumni CALM</div>
+        <div class="g-body-title">Halal Bihalal Alumni CALM</div>
+        <div class="g-body-desc">Silaturahmi Idul Fitri alumni lintas angkatan dalam suasana penuh keakraban.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <!-- ── FASILITAS ── -->
+    <div class="g-card" data-cat="fasilitas" data-type="foto" data-title="Laboratorium Komputer" data-desc="Fasilitas lab komputer modern dengan 40 unit PC dan koneksi internet berkecepatan tinggi.">
+      <div class="g-thumb fasilitas">
+        <span class="thumb-icon">🖥️</span>
+        <span class="badge-cat">Fasilitas</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Laboratorium Komputer</div>
+          <div class="g-ov-sub">Fasilitas · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🖥️ Fasilitas</div>
+        <div class="g-body-title">Laboratorium Komputer</div>
+        <div class="g-body-desc">Lab modern dengan 40 unit PC dan koneksi internet berkecepatan tinggi.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="fasilitas" data-type="foto" data-title="Masjid Al-Musaddadiyah" data-desc="Masjid Al-Musaddadiyah yang menjadi pusat kegiatan keagamaan seluruh warga sekolah.">
+      <div class="g-thumb fasilitas">
+        <span class="thumb-icon">🕌</span>
+        <span class="badge-cat">Fasilitas</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Masjid Al-Musaddadiyah</div>
+          <div class="g-ov-sub">Fasilitas · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🕌 Fasilitas</div>
+        <div class="g-body-title">Masjid Al-Musaddadiyah</div>
+        <div class="g-body-desc">Pusat kegiatan keagamaan seluruh warga sekolah.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card wide" data-cat="fasilitas" data-type="foto" data-title="Aula & Lapangan Utama" data-desc="Aula serbaguna dan lapangan olahraga yang menjadi pusat berbagai kegiatan dan kompetisi sekolah.">
+      <div class="g-thumb fasilitas">
+        <span class="thumb-icon">🏟️</span>
+        <span class="badge-cat">Fasilitas</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Aula & Lapangan Utama</div>
+          <div class="g-ov-sub">Fasilitas · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🏟️ Fasilitas</div>
+        <div class="g-body-title">Aula & Lapangan Utama</div>
+        <div class="g-body-desc">Aula serbaguna dan lapangan olahraga pusat berbagai kegiatan dan kompetisi sekolah.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="g-card" data-cat="fasilitas" data-type="foto" data-title="Bengkel Otomotif TKR" data-desc="Bengkel praktik lengkap dengan peralatan standar industri otomotif untuk jurusan TKR.">
+      <div class="g-thumb fasilitas">
+        <span class="thumb-icon">🛠️</span>
+        <span class="badge-cat">Fasilitas</span>
+        <div class="g-overlay">
+          <div class="g-ov-title">Bengkel Otomotif TKR</div>
+          <div class="g-ov-sub">Fasilitas · Foto</div>
+          <button class="g-ov-btn">Lihat Detail</button>
+        </div>
+      </div>
+      <div class="g-body">
+        <div class="g-body-cat">🛠️ Fasilitas</div>
+        <div class="g-body-title">Bengkel Otomotif TKR</div>
+        <div class="g-body-desc">Bengkel lengkap dengan peralatan standar industri otomotif untuk praktik TKR.</div>
+        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
+      </div>
+    </div>
+
+    <div class="empty-state" id="empty-state">
+      <div class="ei">🔍</div>
+      <p>Tidak ada konten untuk kategori ini.</p>
+      <span style="font-size:13px;color:var(--text-muted)">Coba pilih kategori lain</span>
+    </div>
+
+  </div><!-- /gallery-grid -->
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SMK Ciledug Al-Musaddadiyah</div>
+  <div class="footer-sub">Jl. Ciledug · Garut · Jawa Barat · Indonesia</div>
+  <div class="footer-calm">🎓 Alumni CALM</div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-card">
+    <div class="lb-thumb" id="lb-thumb">
+      <button class="lb-close" id="lb-close">✕</button>
+      <span class="lb-icon" id="lb-icon"></span>
+    </div>
+    <div class="lb-body">
+      <div class="lb-cat-row">
+        <span class="lb-cat-badge" id="lb-cat"></span>
+        <span class="lb-type-badge foto" id="lb-type"></span>
+      </div>
+      <div class="lb-title" id="lb-title"></div>
+      <div class="lb-desc" id="lb-desc"></div>
+    </div>
+  </div>
+</div>
+
+<button class="scroll-top" id="scroll-top">↑</button>
+
+<script>
+// ── NAV scroll ──
+window.addEventListener('scroll',()=>{
+  document.getElementById('site-nav').classList.toggle('scrolled',window.scrollY>10);
+  document.getElementById('scroll-top').classList.toggle('visible',window.scrollY>400);
+});
+
+// ── FILTER ──
+const filterBtns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.g-card');
+const emptyState = document.getElementById('empty-state');
+const secTitle = document.getElementById('sec-title');
+const countBadge = document.getElementById('count-badge');
+
+const catLabels={all:'Semua Konten',ekskul:'Ekskul',jurusan:'Jurusan',event:'Event',prestasi:'Prestasi',alumni:'Alumni CALM',fasilitas:'Fasilitas'};
+
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    filterBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    let vis=0,foto=0,video=0;
+    cards.forEach((c,i)=>{
+      const show=f==='all'||c.dataset.cat===f;
+      c.classList.toggle('hidden',!show);
+      if(show){
+        vis++;
+        c.style.animationDelay=(vis*.06)+'s';
+        c.style.animation='none';
+        requestAnimationFrame(()=>{c.style.animation='';});
+        if(c.dataset.type==='foto')foto++; else video++;
+      }
+    });
+    emptyState.style.display=vis===0?'flex':'none';
+    secTitle.textContent=catLabels[f]||f;
+    countBadge.textContent='📁 '+vis+' item';
+    document.getElementById('h-total').textContent=vis;
+    document.getElementById('h-foto').textContent=foto;
+    document.getElementById('h-video').textContent=video;
+  });
+});
+
+// ── LIGHTBOX ──
+const lb=document.getElementById('lightbox');
+const lbClose=document.getElementById('lb-close');
+const catThumbClass={ekskul:'ekskul',jurusan:'jurusan',event:'event',prestasi:'prestasi',alumni:'alumni',fasilitas:'fasilitas'};
+
+document.querySelectorAll('.g-ov-btn').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const c=btn.closest('.g-card');
+    const cat=c.dataset.cat, type=c.dataset.type;
+    const icon=c.querySelector('.thumb-icon').textContent;
+    document.getElementById('lb-icon').textContent=icon;
+    document.getElementById('lb-cat').textContent=cat.toUpperCase();
+    const typeBadge=document.getElementById('lb-type');
+    typeBadge.textContent=type==='video'?'🎬 Video':'📸 Foto';
+    typeBadge.className='lb-type-badge '+(type==='video'?'video':'foto');
+    document.getElementById('lb-title').textContent=c.dataset.title;
+    document.getElementById('lb-desc').textContent=c.dataset.desc;
+    const lbThumb=document.getElementById('lb-thumb');
+    lbThumb.className='lb-thumb '+cat;
+    lb.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
+lbClose.addEventListener('click',closeLb);
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
+function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
+
+// ── SCROLL TOP ──
+document.getElementById('scroll-top').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>

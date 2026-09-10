@@ -336,6 +336,124 @@ footer{
   .gallery-grid{grid-template-columns:1fr}
   .hero-stats-row{gap:8px}
 }
+
+/* ── ADMIN TOGGLE ── */
+.admin-fab-toggle{
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;
+  transition:background .2s ease,transform .2s ease;
+}
+.admin-fab-toggle:hover{background:rgba(255,255,255,.22);transform:scale(1.06)}
+
+/* ── ADD FAB ── */
+#admin-add-fab{
+  display:none;position:fixed;bottom:26px;left:26px;z-index:500;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--blue-deep);border:none;font-size:24px;font-weight:900;
+  align-items:center;justify-content:center;
+  box-shadow:0 6px 22px rgba(255,179,0,.45);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+#admin-add-fab:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 10px 30px rgba(255,179,0,.55)}
+
+/* ── DELETE BUTTON ON CARDS ── */
+.g-delete-btn{
+  display:none;position:absolute;bottom:10px;right:10px;z-index:3;
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(211,47,47,.92);border:1px solid rgba(255,255,255,.35);
+  color:#fff;font-size:13px;align-items:center;justify-content:center;
+  transition:transform .2s ease,background .2s ease;
+}
+.g-delete-btn:hover{background:#c62828;transform:scale(1.1)}
+body.admin-mode .g-delete-btn{display:flex}
+body.admin-mode .g-card[data-source="dynamic"]{outline:2px dashed rgba(255,179,0,.55);outline-offset:-2px}
+.admin-tag{
+  display:none;position:absolute;top:10px;left:10px;z-index:3;
+  background:rgba(255,179,0,.95);color:var(--blue-deep);
+  font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:5px;letter-spacing:.06em;text-transform:uppercase;
+}
+body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
+
+/* ── MODALS ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:3000;
+  background:rgba(6,30,92,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s ease;padding:20px;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-card{
+  width:100%;max-width:440px;background:var(--white);border-radius:18px;
+  padding:26px 26px 28px;position:relative;
+  transform:scale(.94);transition:transform .25s cubic-bezier(.25,.46,.45,.94);
+  box-shadow:0 40px 100px rgba(11,61,145,.4);
+  max-height:88vh;overflow-y:auto;
+}
+.modal-overlay.open .modal-card{transform:scale(1)}
+.modal-close{
+  position:absolute;top:14px;right:14px;
+  width:30px;height:30px;border-radius:50%;background:var(--blue-pale);
+  border:none;color:var(--blue-mid);font-size:14px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:background .2s ease;
+}
+.modal-close:hover{background:var(--sky)}
+.modal-icon{
+  width:46px;height:46px;border-radius:12px;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));
+  display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;
+}
+.modal-card h3{font-size:19px;font-weight:800;color:var(--text-dark);margin-bottom:6px}
+.modal-sub{font-size:12.5px;color:var(--text-muted);margin-bottom:20px;line-height:1.6}
+
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--text-mid);margin-bottom:6px;text-transform:uppercase}
+.form-group input[type="text"],.form-group input[type="password"],.form-group input[type="url"],
+.form-group select,.form-group textarea{
+  width:100%;padding:10px 13px;border-radius:9px;
+  border:1.5px solid rgba(21,101,192,.18);
+  font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--text-dark);
+  background:var(--cream);transition:border-color .2s ease;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  outline:none;border-color:var(--blue-bright);background:#fff;
+}
+.form-group textarea{resize:vertical;min-height:70px;font-family:inherit}
+.form-row{display:flex;gap:10px}
+.form-row .form-group{flex:1;min-width:0}
+.form-hint{font-size:11px;color:var(--text-muted);margin:-6px 0 14px}
+
+.btn-primary-full{
+  width:100%;padding:12px 0;border:none;border-radius:10px;
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));
+  color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13.5px;
+  margin-top:4px;transition:transform .2s ease,box-shadow .2s ease;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn-primary-full:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(21,101,192,.35)}
+.btn-primary-full:disabled{opacity:.6;transform:none;cursor:default;box-shadow:none}
+.admin-status-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;background:var(--blue-pale);padding:8px 12px;border-radius:10px}
+.admin-status-row span{font-size:11.5px;color:var(--blue-mid);font-weight:600}
+.btn-logout-small{margin-left:auto;font-size:11px;font-weight:700;color:#c62828;background:none;border:none;text-decoration:underline}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--blue-deep);color:#fff;
+  padding:12px 22px;border-radius:50px;font-size:13px;font-weight:600;
+  box-shadow:0 10px 30px rgba(11,61,145,.4);
+  z-index:4000;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;
+  max-width:90vw;text-align:center;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all}
+.toast.error{background:#c62828}
+
+@media(max-width:480px){
+  #admin-add-fab{bottom:20px;left:20px;width:48px;height:48px;font-size:20px}
+  .modal-card{padding:22px 18px 24px}
+}
 </style>
 </head>
 <body>
@@ -351,6 +469,7 @@ footer{
       </div>
     </div>
     <div class="nav-right">
+      <button class="admin-fab-toggle" id="admin-toggle" title="Masuk Mode Admin">🔐</button>
       <button class="btn-gold">🎓 Alumni CALM</button>
     </div>
   </div>
@@ -842,79 +961,411 @@ footer{
 
 <button class="scroll-top" id="scroll-top">↑</button>
 
+<!-- ADMIN ADD FAB -->
+<button id="admin-add-fab" title="Tambah Konten Galeri">+</button>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal-card">
+    <button class="modal-close" id="login-close">✕</button>
+    <div class="modal-icon">🔐</div>
+    <h3>Masuk Mode Admin</h3>
+    <p class="modal-sub">Masukkan password admin untuk menambah atau menghapus konten galeri. Data tersimpan langsung di Google Sheets melalui Google Apps Script.</p>
+    <form id="login-form">
+      <div class="form-group">
+        <label>Password Admin</label>
+        <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password"/>
+      </div>
+      <button type="submit" class="btn-primary-full">🔓 Masuk</button>
+    </form>
+  </div>
+</div>
+
+<!-- ADMIN ADD CONTENT MODAL -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal-card">
+    <button class="modal-close" id="add-close">✕</button>
+    <div class="modal-icon">🖼️</div>
+    <h3>Tambah Konten Galeri</h3>
+    <div class="admin-status-row">
+      <span>🟢 Masuk sebagai Admin</span>
+      <button type="button" class="btn-logout-small" id="admin-logout-inline">Keluar</button>
+    </div>
+    <form id="add-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Kategori</label>
+          <select name="kategori" required>
+            <option value="ekskul">Ekskul</option>
+            <option value="jurusan">Jurusan</option>
+            <option value="event">Event</option>
+            <option value="prestasi">Prestasi</option>
+            <option value="alumni">Alumni CALM</option>
+            <option value="fasilitas">Fasilitas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tipe</label>
+          <select name="tipe" required>
+            <option value="foto">Foto</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Judul</label>
+        <input type="text" name="judul" placeholder="Contoh: Lomba Debat Bahasa Inggris" required/>
+      </div>
+      <div class="form-group">
+        <label>Deskripsi</label>
+        <textarea name="deskripsi" placeholder="Deskripsi singkat kegiatan..." required></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Icon Emoji</label>
+          <input type="text" name="icon" placeholder="🎤" maxlength="4"/>
+        </div>
+        <div class="form-group">
+          <label>URL Gambar (opsional)</label>
+          <input type="url" name="imageUrl" placeholder="https://..."/>
+        </div>
+      </div>
+      <p class="form-hint">Kosongkan URL gambar untuk menampilkan kartu bergaya ikon seperti konten lainnya.</p>
+      <button type="submit" class="btn-primary-full">💾 Simpan Konten</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
+/* ==========================================================================
+   KONFIGURASI BACKEND (GOOGLE APPS SCRIPT)
+   Ganti URL di bawah ini dengan URL Web App hasil deploy Google Apps Script.
+   Lihat file "Code.gs" + panduan setup yang disertakan terpisah.
+   ========================================================================== */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxSau1bybAB80EtMwXv-XK8EkUQNIPr2zcgCyAG8LHoTTVKbqrxnVIwC8rC21rj_m0l/exec';
+
 // ── NAV scroll ──
 window.addEventListener('scroll',()=>{
   document.getElementById('site-nav').classList.toggle('scrolled',window.scrollY>10);
   document.getElementById('scroll-top').classList.toggle('visible',window.scrollY>400);
 });
 
-// ── FILTER ──
+// ── FILTER (delegation-friendly, re-queries kartu tiap kali) ──
 const filterBtns = document.querySelectorAll('.filter-btn');
-const cards = document.querySelectorAll('.g-card');
 const emptyState = document.getElementById('empty-state');
 const secTitle = document.getElementById('sec-title');
 const countBadge = document.getElementById('count-badge');
+const galleryGrid = document.getElementById('gallery-grid');
 
 const catLabels={all:'Semua Konten',ekskul:'Ekskul',jurusan:'Jurusan',event:'Event',prestasi:'Prestasi',alumni:'Alumni CALM',fasilitas:'Fasilitas'};
+let currentFilter='all';
 
-filterBtns.forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    filterBtns.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const f=btn.dataset.filter;
-    let vis=0,foto=0,video=0;
-    cards.forEach((c,i)=>{
-      const show=f==='all'||c.dataset.cat===f;
-      c.classList.toggle('hidden',!show);
-      if(show){
-        vis++;
-        c.style.animationDelay=(vis*.06)+'s';
-        c.style.animation='none';
-        requestAnimationFrame(()=>{c.style.animation='';});
-        if(c.dataset.type==='foto')foto++; else video++;
-      }
-    });
-    emptyState.style.display=vis===0?'flex':'none';
-    secTitle.textContent=catLabels[f]||f;
-    countBadge.textContent='📁 '+vis+' item';
-    document.getElementById('h-total').textContent=vis;
-    document.getElementById('h-foto').textContent=foto;
-    document.getElementById('h-video').textContent=video;
+function applyFilter(f){
+  currentFilter=f;
+  filterBtns.forEach(b=>b.classList.toggle('active',b.dataset.filter===f));
+  const cards=document.querySelectorAll('.g-card');
+  let vis=0,foto=0,video=0;
+  cards.forEach(c=>{
+    const show=f==='all'||c.dataset.cat===f;
+    c.classList.toggle('hidden',!show);
+    if(show){
+      vis++;
+      c.style.animationDelay=(vis*.06)+'s';
+      c.style.animation='none';
+      requestAnimationFrame(()=>{c.style.animation='';});
+      if(c.dataset.type==='foto')foto++; else video++;
+    }
   });
-});
+  emptyState.style.display=vis===0?'flex':'none';
+  secTitle.textContent=catLabels[f]||f;
+  countBadge.textContent='📁 '+vis+' item';
+  document.getElementById('h-total').textContent=vis;
+  document.getElementById('h-foto').textContent=foto;
+  document.getElementById('h-video').textContent=video;
+}
+filterBtns.forEach(btn=>btn.addEventListener('click',()=>applyFilter(btn.dataset.filter)));
 
-// ── LIGHTBOX ──
+// ── LIGHTBOX (event delegation di grid, jalan untuk kartu statis & dinamis) ──
 const lb=document.getElementById('lightbox');
 const lbClose=document.getElementById('lb-close');
-const catThumbClass={ekskul:'ekskul',jurusan:'jurusan',event:'event',prestasi:'prestasi',alumni:'alumni',fasilitas:'fasilitas'};
 
-document.querySelectorAll('.g-ov-btn').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-    e.stopPropagation();
-    const c=btn.closest('.g-card');
-    const cat=c.dataset.cat, type=c.dataset.type;
-    const icon=c.querySelector('.thumb-icon').textContent;
-    document.getElementById('lb-icon').textContent=icon;
-    document.getElementById('lb-cat').textContent=cat.toUpperCase();
-    const typeBadge=document.getElementById('lb-type');
-    typeBadge.textContent=type==='video'?'🎬 Video':'📸 Foto';
-    typeBadge.className='lb-type-badge '+(type==='video'?'video':'foto');
-    document.getElementById('lb-title').textContent=c.dataset.title;
-    document.getElementById('lb-desc').textContent=c.dataset.desc;
-    const lbThumb=document.getElementById('lb-thumb');
-    lbThumb.className='lb-thumb '+cat;
-    lb.classList.add('open');
-    document.body.style.overflow='hidden';
-  });
-});
+function openLightbox(c){
+  const cat=c.dataset.cat, type=c.dataset.type;
+  const thumb=c.querySelector('.g-thumb');
+  const iconEl=c.querySelector('.thumb-icon');
+  document.getElementById('lb-icon').textContent=iconEl?iconEl.textContent:'';
+  document.getElementById('lb-cat').textContent=cat.toUpperCase();
+  const typeBadge=document.getElementById('lb-type');
+  typeBadge.textContent=type==='video'?'🎬 Video':'📸 Foto';
+  typeBadge.className='lb-type-badge '+(type==='video'?'video':'foto');
+  document.getElementById('lb-title').textContent=c.dataset.title;
+  document.getElementById('lb-desc').textContent=c.dataset.desc;
+  const lbThumb=document.getElementById('lb-thumb');
+  lbThumb.className='lb-thumb '+cat;
+  if(thumb && thumb.style.backgroundImage){
+    lbThumb.style.backgroundImage=thumb.style.backgroundImage;
+    lbThumb.style.backgroundSize='cover';
+    lbThumb.style.backgroundPosition='center';
+  }else{
+    lbThumb.style.backgroundImage='';
+  }
+  lb.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
 lbClose.addEventListener('click',closeLb);
 lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
-function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
+
+galleryGrid.addEventListener('click',e=>{
+  const ovBtn=e.target.closest('.g-ov-btn');
+  if(ovBtn){
+    e.stopPropagation();
+    openLightbox(ovBtn.closest('.g-card'));
+    return;
+  }
+  const delBtn=e.target.closest('.g-delete-btn');
+  if(delBtn){
+    e.stopPropagation();
+    handleDelete(delBtn.dataset.id, delBtn.closest('.g-card'));
+  }
+});
 
 // ── SCROLL TOP ──
 document.getElementById('scroll-top').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ==========================================================================
+   ADMIN: LOGIN, TAMBAH & HAPUS KONTEN (via Google Apps Script + Google Sheets)
+   ========================================================================== */
+let isAdmin=false;
+let adminPassword='';
+
+function backendReady(){
+  return GAS_URL && !GAS_URL.includes('PASTE_URL');
+}
+
+function showToast(msg,isError){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show'+(isError?' error':'');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>{t.className='toast';},3000);
+}
+
+function escapeHtml(str){
+  const div=document.createElement('div');
+  div.textContent=str||'';
+  return div.innerHTML;
+}
+
+function updateAdminUI(){
+  document.body.classList.toggle('admin-mode',isAdmin);
+  const toggle=document.getElementById('admin-toggle');
+  toggle.textContent=isAdmin?'🔓':'🔐';
+  toggle.title=isAdmin?'Keluar Mode Admin':'Masuk Mode Admin';
+  document.getElementById('admin-add-fab').style.display=isAdmin?'flex':'none';
+}
+
+function logoutAdmin(){
+  isAdmin=false;
+  adminPassword='';
+  sessionStorage.removeItem('galeri_admin_pw');
+  updateAdminUI();
+  closeAddModal();
+  showToast('Keluar dari mode admin');
+}
+
+document.getElementById('admin-toggle').addEventListener('click',()=>{
+  if(isAdmin){ logoutAdmin(); } else { openLoginModal(); }
+});
+document.getElementById('admin-logout-inline').addEventListener('click',logoutAdmin);
+
+// ── Modal login ──
+const loginModal=document.getElementById('login-modal');
+function openLoginModal(){
+  if(!backendReady()){
+    showToast('URL backend Google Apps Script belum diatur di script.',true);
+  }
+  loginModal.classList.add('open');
+  const pw=document.getElementById('login-password');
+  pw.value='';
+  setTimeout(()=>pw.focus(),100);
+}
+function closeLoginModal(){ loginModal.classList.remove('open'); }
+document.getElementById('login-close').addEventListener('click',closeLoginModal);
+loginModal.addEventListener('click',e=>{ if(e.target===loginModal) closeLoginModal(); });
+
+document.getElementById('login-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  if(!backendReady()){ showToast('URL backend Apps Script belum diatur.',true); return; }
+  const pw=document.getElementById('login-password').value;
+  const submitBtn=e.target.querySelector('button[type=submit]');
+  submitBtn.disabled=true; submitBtn.textContent='Memeriksa...';
+  try{
+    const res=await fetch(GAS_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({action:'login',password:pw})
+    });
+    const data=await res.json();
+    if(data.success){
+      isAdmin=true;
+      adminPassword=pw;
+      sessionStorage.setItem('galeri_admin_pw',pw);
+      updateAdminUI();
+      closeLoginModal();
+      showToast('Berhasil masuk sebagai admin ✓');
+    }else{
+      showToast(data.message||'Password salah',true);
+    }
+  }catch(err){
+    showToast('Gagal terhubung ke server. Cek URL Apps Script.',true);
+  }finally{
+    submitBtn.disabled=false; submitBtn.textContent='🔓 Masuk';
+  }
+});
+
+// ── Modal tambah konten ──
+const addModal=document.getElementById('add-modal');
+document.getElementById('admin-add-fab').addEventListener('click',openAddModal);
+function openAddModal(){
+  document.getElementById('add-form').reset();
+  addModal.classList.add('open');
+}
+function closeAddModal(){ addModal.classList.remove('open'); }
+document.getElementById('add-close').addEventListener('click',closeAddModal);
+addModal.addEventListener('click',e=>{ if(e.target===addModal) closeAddModal(); });
+
+document.getElementById('add-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  if(!backendReady()){ showToast('URL backend Apps Script belum diatur.',true); return; }
+  const fd=new FormData(e.target);
+  const item={
+    kategori:fd.get('kategori'),
+    tipe:fd.get('tipe'),
+    judul:(fd.get('judul')||'').trim(),
+    deskripsi:(fd.get('deskripsi')||'').trim(),
+    icon:(fd.get('icon')||'').trim()||'🖼️',
+    imageUrl:(fd.get('imageUrl')||'').trim()
+  };
+  if(!item.judul||!item.deskripsi){ showToast('Judul dan deskripsi wajib diisi',true); return; }
+  const submitBtn=e.target.querySelector('button[type=submit]');
+  submitBtn.disabled=true; submitBtn.textContent='Menyimpan...';
+  try{
+    const res=await fetch(GAS_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({action:'add',password:adminPassword,...item})
+    });
+    const data=await res.json();
+    if(data.success){
+      renderDynamicItems([data.item]);
+      applyFilter(currentFilter);
+      closeAddModal();
+      showToast('Konten berhasil ditambahkan ✓');
+    }else{
+      showToast(data.message||'Gagal menyimpan konten',true);
+    }
+  }catch(err){
+    showToast('Gagal terhubung ke server.',true);
+  }finally{
+    submitBtn.disabled=false; submitBtn.textContent='💾 Simpan Konten';
+  }
+});
+
+// ── Hapus konten ──
+async function handleDelete(id,cardEl){
+  if(!confirm('Hapus konten ini dari galeri?'))return;
+  try{
+    const res=await fetch(GAS_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({action:'delete',password:adminPassword,id})
+    });
+    const data=await res.json();
+    if(data.success){
+      cardEl.remove();
+      applyFilter(currentFilter);
+      showToast('Konten dihapus');
+    }else{
+      showToast(data.message||'Gagal menghapus konten',true);
+    }
+  }catch(err){
+    showToast('Gagal terhubung ke server.',true);
+  }
+}
+
+// ── Render kartu dari data dinamis (Google Sheets) ──
+function createCardElement(item){
+  const card=document.createElement('div');
+  card.className='g-card';
+  card.dataset.cat=item.kategori;
+  card.dataset.type=item.tipe;
+  card.dataset.title=item.judul;
+  card.dataset.desc=item.deskripsi;
+  card.dataset.source='dynamic';
+  card.dataset.id=item.id;
+
+  const catLabel=catLabels[item.kategori]||item.kategori;
+  const typeLabel=item.tipe==='video'?'🎬 Video':'📸 Foto';
+  const videoBadge=item.tipe==='video'?'<span class="badge-video">Video</span>':'';
+  const hasImg=!!item.imageUrl;
+  const thumbStyle=hasImg?` style="background-image:url('${escapeHtml(item.imageUrl)}');background-size:cover;background-position:center;"`:'';
+  const iconHtml=hasImg?'':`<span class="thumb-icon">${item.icon||'🖼️'}</span>`;
+
+  card.innerHTML=`
+    <div class="g-thumb ${item.kategori}"${thumbStyle}>
+      ${iconHtml}
+      ${videoBadge}
+      <span class="badge-cat">${catLabel}</span>
+      <span class="admin-tag">✎ Admin</span>
+      <button class="g-delete-btn" data-id="${item.id}" title="Hapus konten">🗑</button>
+      <div class="g-overlay">
+        <div class="g-ov-title">${escapeHtml(item.judul)}</div>
+        <div class="g-ov-sub">${catLabel} · ${item.tipe==='video'?'Video':'Foto'}</div>
+        <button class="g-ov-btn">Lihat Detail</button>
+      </div>
+    </div>
+    <div class="g-body">
+      <div class="g-body-cat">${item.icon||'🖼️'} ${catLabel}</div>
+      <div class="g-body-title">${escapeHtml(item.judul)}</div>
+      <div class="g-body-desc">${escapeHtml(item.deskripsi)}</div>
+      <div class="g-body-foot"><span class="g-type-pill ${item.tipe}">${typeLabel}</span></div>
+    </div>`;
+  return card;
+}
+
+function renderDynamicItems(items){
+  items.forEach(item=>{
+    const card=createCardElement(item);
+    galleryGrid.insertBefore(card,emptyState);
+  });
+}
+
+async function loadGalleryData(){
+  if(!backendReady())return;
+  try{
+    const res=await fetch(GAS_URL+'?action=list');
+    const data=await res.json();
+    if(data.success && Array.isArray(data.items) && data.items.length){
+      renderDynamicItems(data.items);
+      applyFilter(currentFilter);
+    }
+  }catch(err){
+    console.warn('Gagal memuat data galeri dari server:',err);
+  }
+}
+
+// ── Inisialisasi ──
+(function init(){
+  const savedPw=sessionStorage.getItem('galeri_admin_pw');
+  if(savedPw){ isAdmin=true; adminPassword=savedPw; }
+  updateAdminUI();
+  applyFilter('all');
+  loadGalleryData();
+})();
 </script>
 </body>
 </html>

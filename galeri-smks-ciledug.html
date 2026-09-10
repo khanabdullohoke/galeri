@@ -346,6 +346,25 @@ footer{
 }
 .admin-fab-toggle:hover{background:rgba(255,255,255,.22);transform:scale(1.06)}
 
+.btn-add-nav{
+  display:none;align-items:center;gap:6px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--blue-deep);font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:800;font-size:12px;padding:8px 16px;border-radius:50px;
+  border:none;box-shadow:0 4px 16px rgba(255,179,0,.35);white-space:nowrap;
+  transition:transform var(--transition),box-shadow var(--transition);
+  animation:pulseAdd 1.8s ease infinite;
+}
+.btn-add-nav:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,179,0,.5)}
+@keyframes pulseAdd{0%,100%{box-shadow:0 4px 16px rgba(255,179,0,.35)}50%{box-shadow:0 4px 22px rgba(255,179,0,.7)}}
+body.admin-mode .btn-add-nav{display:inline-flex}
+.btn-add-nav .short-label{display:none}
+@media(max-width:640px){
+  .btn-add-nav .long-label{display:none}
+  .btn-add-nav .short-label{display:inline}
+  .btn-add-nav{padding:8px 12px;font-size:15px}
+}
+
 /* ── ADD FAB ── */
 #admin-add-fab{
   display:none;position:fixed;bottom:26px;left:26px;z-index:500;
@@ -469,6 +488,7 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
       </div>
     </div>
     <div class="nav-right">
+      <button class="btn-add-nav" id="admin-add-nav-btn" title="Tambah Konten Galeri"><span class="short-label">➕</span><span class="long-label">➕ Tambah Konten</span></button>
       <button class="admin-fab-toggle" id="admin-toggle" title="Masuk Mode Admin">🔐</button>
       <button class="btn-gold">🎓 Alumni CALM</button>
     </div>
@@ -1181,6 +1201,7 @@ document.getElementById('admin-toggle').addEventListener('click',()=>{
   if(isAdmin){ logoutAdmin(); } else { openLoginModal(); }
 });
 document.getElementById('admin-logout-inline').addEventListener('click',logoutAdmin);
+document.getElementById('admin-add-nav-btn').addEventListener('click',openAddModal);
 
 // ── Modal login ──
 const loginModal=document.getElementById('login-modal');
@@ -1217,6 +1238,7 @@ document.getElementById('login-form').addEventListener('submit', async (e)=>{
       updateAdminUI();
       closeLoginModal();
       showToast('Berhasil masuk sebagai admin ✓');
+      setTimeout(openAddModal,350);
     }else{
       showToast(data.message||'Password salah',true);
     }

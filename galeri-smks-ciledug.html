@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Galeri Kegiatan — SMK Ciledug Al-Musaddadiyah</title>
 <meta name="description" content="Galeri foto dan video kegiatan SMKS Ciledug Al-Musaddadiyah Garut."/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https://script.google.com;"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,700;0,800;0,900;1,900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -583,6 +585,9 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
 .faq-a p{padding:0 18px 16px;font-size:13px;color:var(--text-muted);line-height:1.7}
 .faq-item.open .faq-a{max-height:240px}
+
+/* honeypot anti-bot: tersembunyi dari mata manusia, tapi tetap "terlihat" oleh bot sederhana */
+.hp-field{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden}
 </style>
 </head>
 <body>
@@ -1181,11 +1186,11 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
         </div>
         <div class="form-group">
           <label>Judul</label>
-          <input type="text" name="judul" placeholder="Contoh: Lomba Debat Bahasa Inggris" required/>
+          <input type="text" name="judul" placeholder="Contoh: Lomba Debat Bahasa Inggris" maxlength="120" required/>
         </div>
         <div class="form-group">
           <label>Deskripsi</label>
-          <textarea name="deskripsi" placeholder="Deskripsi singkat kegiatan..." required></textarea>
+          <textarea name="deskripsi" placeholder="Deskripsi singkat kegiatan..." maxlength="600" required></textarea>
         </div>
         <div class="form-group">
           <label>Icon Emoji (untuk kartu tanpa foto)</label>
@@ -1232,10 +1237,15 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
     <h3>Kirim Dokumentasi Kegiatan</h3>
     <p class="modal-sub">Guru, staf, siswa, maupun alumni SMK Ciledug Al-Musaddadiyah dapat mengirim foto atau video kegiatan sekolah di sini. Konten akan tampil di galeri setelah disetujui Tim Dokumentasi Sekolah.</p>
     <form id="submit-form">
+      <!-- honeypot: kolom jebakan bot, disembunyikan dari manusia lewat CSS, bukan display:none -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="submit-website">Situs Web</label>
+        <input type="text" name="website" id="submit-website" tabindex="-1" autocomplete="off"/>
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label>Nama Pengirim</label>
-          <input type="text" name="pengirimNama" placeholder="Nama lengkap" required/>
+          <input type="text" name="pengirimNama" placeholder="Nama lengkap" maxlength="80" required/>
         </div>
         <div class="form-group">
           <label>Peran</label>
@@ -1269,11 +1279,11 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
       </div>
       <div class="form-group">
         <label>Judul</label>
-        <input type="text" name="judul" placeholder="Contoh: Bakti Sosial Alumni 2026" required/>
+        <input type="text" name="judul" placeholder="Contoh: Bakti Sosial Alumni 2026" maxlength="120" required/>
       </div>
       <div class="form-group">
         <label>Deskripsi</label>
-        <textarea name="deskripsi" placeholder="Ceritakan singkat kegiatannya..." required></textarea>
+        <textarea name="deskripsi" placeholder="Ceritakan singkat kegiatannya..." maxlength="600" required></textarea>
       </div>
       <div class="form-group" id="submit-media-group">
         <label>Media</label>
@@ -1570,6 +1580,14 @@ function setupMediaSource(prefix){
     fileInput.addEventListener('change',async ()=>{
       const file=fileInput.files[0];
       if(!file)return;
+      if(!file.type.startsWith('image/')){
+        showToast('File harus berupa gambar (JPG/PNG/WEBP).',true);
+        fileInput.value=''; return;
+      }
+      if(file.size>15*1024*1024){
+        showToast('Ukuran file terlalu besar (maks. 15MB).',true);
+        fileInput.value=''; return;
+      }
       preview.classList.add('show');
       const oldImg=preview.querySelector('img'); if(oldImg) oldImg.remove();
       statusEl.textContent='Mengompres foto...';
@@ -1664,28 +1682,61 @@ document.getElementById('add-form').addEventListener('submit', async (e)=>{
 
 // ── Modal publik: kirim dokumentasi kegiatan (guru/staf/siswa/alumni) ──
 const submitModal=document.getElementById('submit-modal');
+let submitFormOpenedAt=0;
 document.getElementById('public-submit-btn').addEventListener('click',()=>{
   document.getElementById('submit-form').reset();
   document.getElementById('submit-source-toggle').style.display='flex';
   submitMediaSource.setSource('link');
+  submitFormOpenedAt=Date.now();
   submitModal.classList.add('open');
 });
 function closeSubmitModal(){ submitModal.classList.remove('open'); }
 document.getElementById('submit-close').addEventListener('click',closeSubmitModal);
 submitModal.addEventListener('click',e=>{ if(e.target===submitModal) closeSubmitModal(); });
 
+// ── Pembatas kirim sisi klien (bantu cegah spam berulang dari browser yang sama) ──
+function tooManyRecentSubmissions(){
+  const KEY='galeri_submit_log', LIMIT=3, WINDOW_MS=10*60*1000;
+  let log=[];
+  try{ log=JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ log=[]; }
+  const now=Date.now();
+  log=log.filter(t=>now-t<WINDOW_MS);
+  if(log.length>=LIMIT){ return true; }
+  log.push(now);
+  localStorage.setItem(KEY, JSON.stringify(log));
+  return false;
+}
+
 document.getElementById('submit-form').addEventListener('submit', async (e)=>{
   e.preventDefault();
   if(!backendReady()){ showToast('URL backend Apps Script belum diatur.',true); return; }
+  // Kolom jebakan bot: manusia tidak akan mengisi kolom tersembunyi ini
+  const honeypot=(new FormData(e.target)).get('website')||'';
+  if(honeypot.trim()!==''){
+    // Diam-diam tolak tanpa memberi tahu bot bahwa ini terdeteksi
+    e.target.reset();
+    closeSubmitModal();
+    showToast('Terkirim! Menunggu persetujuan Tim Dokumentasi Sekolah ✓');
+    return;
+  }
+  if(Date.now()-submitFormOpenedAt<2500){
+    showToast('Mohon periksa kembali formulir sebelum mengirim.',true);
+    return;
+  }
+  if(tooManyRecentSubmissions()){
+    showToast('Terlalu banyak kiriman dari perangkat ini. Coba lagi beberapa menit lagi.',true);
+    return;
+  }
   const fd=new FormData(e.target);
   const item={
-    pengirimNama:(fd.get('pengirimNama')||'').trim(),
+    pengirimNama:(fd.get('pengirimNama')||'').trim().slice(0,80),
     pengirimPeran:fd.get('pengirimPeran'),
     kategori:fd.get('kategori'),
     tipe:fd.get('tipe'),
-    judul:(fd.get('judul')||'').trim(),
-    deskripsi:(fd.get('deskripsi')||'').trim(),
-    imageUrl:(fd.get('imageUrl')||'').trim()
+    judul:(fd.get('judul')||'').trim().slice(0,120),
+    deskripsi:(fd.get('deskripsi')||'').trim().slice(0,600),
+    imageUrl:(fd.get('imageUrl')||'').trim().slice(0,500),
+    formElapsedMs:Date.now()-submitFormOpenedAt
   };
   const compressed=submitMediaSource.getCompressedData();
   if(item.tipe==='foto' && compressed){
@@ -1768,18 +1819,25 @@ function renderPendingList(items){
   items.forEach(item=>{
     const el=document.createElement('div');
     el.className='pending-item';
-    const catLabel=catLabels[item.kategori]||item.kategori;
-    const thumbStyle=item.imageUrl?` style="background-image:url('${escapeHtml(item.imageUrl)}')"`:'';
+    const catClass=safeCatClass(item.kategori);
+    const typeClass=safeTypeClass(item.tipe);
+    const catLabel=escapeHtml(catLabels[catClass]||catClass);
+    const iconSafe=escapeHtml((item.icon||'🖼️').slice(0,8));
+    const hasImg=isSafeImageUrl(item.imageUrl);
     el.innerHTML=`
-      <div class="pending-thumb"${thumbStyle}>${item.imageUrl?'':(item.icon||'🖼️')}</div>
+      <div class="pending-thumb">${hasImg?'':iconSafe}</div>
       <div class="pending-body">
         <div class="pending-title">${escapeHtml(item.judul)}</div>
-        <div class="pending-meta">${catLabel} · ${item.tipe==='video'?'Video':'Foto'} · <span class="role-badge">${escapeHtml(item.pengirimPeran||'-')}</span> ${escapeHtml(item.pengirimNama||'')}</div>
+        <div class="pending-meta">${catLabel} · ${typeClass==='video'?'Video':'Foto'} · <span class="role-badge">${escapeHtml(item.pengirimPeran||'-')}</span> ${escapeHtml(item.pengirimNama||'')}</div>
         <div class="pending-actions">
-          <button type="button" class="btn-approve" data-id="${item.id}">✓ Setujui</button>
-          <button type="button" class="btn-reject" data-id="${item.id}">✕ Tolak</button>
+          <button type="button" class="btn-approve" data-id="${escapeHtml(item.id)}">✓ Setujui</button>
+          <button type="button" class="btn-reject" data-id="${escapeHtml(item.id)}">✕ Tolak</button>
         </div>
       </div>`;
+    if(hasImg){
+      const thumbEl=el.querySelector('.pending-thumb');
+      thumbEl.style.backgroundImage=`url("${item.imageUrl}")`;
+    }
     list.appendChild(el);
   });
 }
@@ -1843,42 +1901,57 @@ async function handleDelete(id,cardEl){
 }
 
 // ── Render kartu dari data dinamis (Google Sheets) ──
+const KNOWN_CATS=['ekskul','jurusan','event','prestasi','alumni','fasilitas'];
+function safeCatClass(cat){ return KNOWN_CATS.includes(cat)?cat:'event'; }
+function safeTypeClass(tipe){ return tipe==='video'?'video':'foto'; }
+function isSafeImageUrl(url){ return typeof url==='string' && /^https:\/\//i.test(url); }
+
 function createCardElement(item){
   const card=document.createElement('div');
   card.className='g-card';
-  card.dataset.cat=item.kategori;
-  card.dataset.type=item.tipe;
+  const catClass=safeCatClass(item.kategori);
+  const typeClass=safeTypeClass(item.tipe);
+  card.dataset.cat=catClass;
+  card.dataset.type=typeClass;
   card.dataset.title=item.judul;
   card.dataset.desc=item.deskripsi;
   card.dataset.source='dynamic';
   card.dataset.id=item.id;
 
-  const catLabel=catLabels[item.kategori]||item.kategori;
-  const typeLabel=item.tipe==='video'?'🎬 Video':'📸 Foto';
-  const videoBadge=item.tipe==='video'?'<span class="badge-video">Video</span>':'';
-  const hasImg=!!item.imageUrl;
-  const thumbStyle=hasImg?` style="background-image:url('${escapeHtml(item.imageUrl)}');background-size:cover;background-position:center;"`:'';
-  const iconHtml=hasImg?'':`<span class="thumb-icon">${item.icon||'🖼️'}</span>`;
+  const catLabel=escapeHtml(catLabels[catClass]||catClass);
+  const iconSafe=escapeHtml((item.icon||'🖼️').slice(0,8));
+  const typeLabel=typeClass==='video'?'🎬 Video':'📸 Foto';
+  const videoBadge=typeClass==='video'?'<span class="badge-video">Video</span>':'';
+  const hasImg=isSafeImageUrl(item.imageUrl);
+  const iconHtml=hasImg?'':`<span class="thumb-icon">${iconSafe}</span>`;
 
   card.innerHTML=`
-    <div class="g-thumb ${item.kategori}"${thumbStyle}>
+    <div class="g-thumb ${catClass}">
       ${iconHtml}
       ${videoBadge}
       <span class="badge-cat">${catLabel}</span>
       <span class="admin-tag">✎ Resmi Sekolah</span>
-      <button class="g-delete-btn" data-id="${item.id}" title="Hapus konten">🗑</button>
+      <button class="g-delete-btn" data-id="${escapeHtml(item.id)}" title="Hapus konten">🗑</button>
       <div class="g-overlay">
         <div class="g-ov-title">${escapeHtml(item.judul)}</div>
-        <div class="g-ov-sub">${catLabel} · ${item.tipe==='video'?'Video':'Foto'}</div>
+        <div class="g-ov-sub">${catLabel} · ${typeClass==='video'?'Video':'Foto'}</div>
         <button class="g-ov-btn">Lihat Detail</button>
       </div>
     </div>
     <div class="g-body">
-      <div class="g-body-cat">${item.icon||'🖼️'} ${catLabel}</div>
+      <div class="g-body-cat">${iconSafe} ${catLabel}</div>
       <div class="g-body-title">${escapeHtml(item.judul)}</div>
       <div class="g-body-desc">${escapeHtml(item.deskripsi)}</div>
-      <div class="g-body-foot"><span class="g-type-pill ${item.tipe}">${typeLabel}</span></div>
+      <div class="g-body-foot"><span class="g-type-pill ${typeClass}">${typeLabel}</span></div>
     </div>`;
+  // Gambar dipasang lewat properti style (bukan string HTML) agar tidak bisa
+  // dipakai untuk keluar dari atribut/menyisipkan markup — dan hanya URL https yang diterima.
+  if(hasImg){
+    const thumbEl=card.querySelector('.g-thumb');
+    thumbEl.style.backgroundImage=`url("${item.imageUrl}")`;
+    thumbEl.style.backgroundSize='cover';
+    thumbEl.style.backgroundPosition='center';
+  }
   return card;
 }
 

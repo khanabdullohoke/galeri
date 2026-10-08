@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Galeri Kegiatan — SMK Ciledug Al-Musaddadiyah</title>
 <meta name="description" content="Galeri foto dan video kegiatan SMKS Ciledug Al-Musaddadiyah Garut."/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src https://script.google.com https://script.googleusercontent.com https://www.smkciledugalmusaddadiyah.sch.id https://www.blogger.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https://script.google.com;"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://www.smkciledugalmusaddadiyah.sch.id; connect-src https://script.google.com https://script.googleusercontent.com https://www.smkciledugalmusaddadiyah.sch.id https://www.blogger.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https://script.google.com;"/>
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -169,7 +169,7 @@ button{font-family:inherit;cursor:pointer}
 }
 @keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .g-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
-.g-card.hidden{display:none}
+.g-card.hidden,.g-card.pg-hidden{display:none}
 .g-card.wide{grid-column:span 2}
 @media(max-width:640px){.g-card.wide{grid-column:span 1}}
 
@@ -390,6 +390,13 @@ body.admin-mode .btn-add-nav{display:inline-flex}
 .g-delete-btn:hover{background:#c62828;transform:scale(1.1)}
 body.admin-mode .g-delete-btn{display:flex}
 body.admin-mode .g-card[data-source="dynamic"]{outline:2px dashed rgba(255,179,0,.55);outline-offset:-2px}
+.more-wrap{display:flex;justify-content:center;margin:28px 0 8px}
+.more-btn{
+  background:linear-gradient(135deg,var(--blue-mid),var(--blue-bright));color:#fff;border:none;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;
+  padding:12px 28px;border-radius:50px;box-shadow:var(--shadow);transition:transform var(--transition);
+}
+.more-btn:hover{transform:translateY(-2px)}
 .src-tag{
   position:absolute;top:10px;left:10px;z-index:3;
   background:rgba(255,255,255,.92);color:var(--blue-deep);
@@ -942,7 +949,33 @@ const galleryGrid = document.getElementById('gallery-grid');
 const catLabels={all:'Semua Konten',ekskul:'Ekskul',jurusan:'Jurusan',event:'Event',prestasi:'Prestasi',alumni:'Alumni CALM',fasilitas:'Fasilitas'};
 let currentFilter='all';
 
+// ── PAGING: jumlah foto website yang tampil mengikuti lebar halaman (kolom × baris penuh) ──
+const PAGE_ROWS_FIRST=3, PAGE_ROWS_STEP=3;
+let pageRows=PAGE_ROWS_FIRST;
+const moreWrap=document.createElement('div');
+moreWrap.className='more-wrap'; moreWrap.style.display='none';
+moreWrap.innerHTML='<button type="button" class="more-btn" id="more-btn"></button>';
+galleryGrid.parentNode.insertBefore(moreWrap,galleryGrid.nextSibling);
+function gridCols(){
+  const t=getComputedStyle(galleryGrid).gridTemplateColumns||'';
+  return Math.max(1,t.split(' ').filter(x=>x&&x!=='none').length);
+}
+function applyPaging(){
+  const limit=gridCols()*pageRows;
+  let n=0;
+  galleryGrid.querySelectorAll('.g-card:not(.hidden)').forEach(c=>{
+    if(c.dataset.source==='blog'){ n++; c.classList.toggle('pg-hidden',n>limit); }   // kartu manual selalu tampil
+    else c.classList.remove('pg-hidden');
+  });
+  const sisa=n-limit;
+  moreWrap.style.display=sisa>0?'flex':'none';
+  if(sisa>0) document.getElementById('more-btn').textContent='Tampilkan lebih banyak ('+sisa+' lagi)';
+}
+document.getElementById('more-btn').addEventListener('click',()=>{pageRows+=PAGE_ROWS_STEP;applyPaging();});
+let _rzT; window.addEventListener('resize',()=>{clearTimeout(_rzT);_rzT=setTimeout(applyPaging,150);});
+
 function applyFilter(f){
+  if(f!==currentFilter) pageRows=PAGE_ROWS_FIRST;
   currentFilter=f;
   filterBtns.forEach(b=>b.classList.toggle('active',b.dataset.filter===f));
   const cards=document.querySelectorAll('.g-card');
@@ -964,6 +997,7 @@ function applyFilter(f){
   document.getElementById('h-total').textContent=vis;
   document.getElementById('h-foto').textContent=foto;
   document.getElementById('h-video').textContent=video;
+  applyPaging();
 }
 filterBtns.forEach(btn=>btn.addEventListener('click',()=>applyFilter(btn.dataset.filter)));
 
@@ -1592,7 +1626,11 @@ async function loadGalleryData(){
    Setiap postingan yang memiliki gambar akan otomatis menjadi kartu galeri:
    judul = judul postingan, keterangan = cuplikan isi, foto = gambar pertama.
    ========================================================================== */
-const BLOG_FEED_URL = 'https://www.smkciledugalmusaddadiyah.sch.id/feeds/posts/default?alt=json&max-results=40';
+const BLOG_FEED_BASE = 'https://www.smkciledugalmusaddadiyah.sch.id/feeds/posts/default';
+const BLOG_FEED_URL = BLOG_FEED_BASE+'?alt=json&max-results=40';
+const BLOG_REFRESH_MS = 5*60*1000;      // cek postingan baru tiap 5 menit
+const BLOG_CACHE_KEY = 'galeri_blog_cache_v1';
+let blogLastSig='', blogError='';
 const BLOG_MAX_ITEMS = 40;
 
 // Aturan kategori: dicocokkan dengan label + judul postingan (urutan = prioritas)
@@ -1695,24 +1733,60 @@ function createBlogCard(item){
   return card;
 }
 
+function fetchBlogFeedJsonp(){
+  return new Promise((resolve,reject)=>{
+    const cb='__blogFeed'+Date.now();
+    const sc=document.createElement('script');
+    const done=()=>{clearTimeout(t);delete window[cb];sc.remove();};
+    const t=setTimeout(()=>{done();reject(new Error('waktu habis'));},12000);
+    window[cb]=d=>{done();resolve(d);};
+    sc.onerror=()=>{done();reject(new Error('feed diblokir/tidak tersedia'));};
+    sc.src=BLOG_FEED_BASE+'?alt=json-in-script&max-results=40&callback='+cb;
+    document.head.appendChild(sc);
+  });
+}
+async function fetchBlogFeed(){
+  try{ return await fetchBlogFeedJsonp(); }
+  catch(e1){
+    const res=await fetch(BLOG_FEED_URL);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    return await res.json();
+  }
+}
+
+function renderBlogItems(items){
+  const sig=items.map(i=>i.id).join('|');
+  if(sig===blogLastSig) return;                       // tidak ada perubahan → tidak perlu render ulang
+  blogLastSig=sig;
+  galleryGrid.querySelectorAll('.g-card[data-source="blog"]').forEach(c=>c.remove());
+  const frag=document.createDocumentFragment();
+  items.forEach(it=>frag.appendChild(createBlogCard(it)));   // urut terbaru → terlama
+  galleryGrid.insertBefore(frag,galleryGrid.firstChild);
+  applyFilter(currentFilter);
+}
+
 async function loadBlogPosts(){
   try{
-    const res=await fetch(BLOG_FEED_URL,{headers:{'Accept':'application/json'}});
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data=await res.json();
+    const data=await fetchBlogFeed();
     const entries=(data.feed&&data.feed.entry)||[];
     const items=entries.map(blogParseEntry).filter(Boolean).slice(0,BLOG_MAX_ITEMS);
-    if(!items.length) return;
-
-    // hapus kartu blog lama (jika dimuat ulang), lalu pasang yang terbaru di bagian atas grid
-    galleryGrid.querySelectorAll('.g-card[data-source="blog"]').forEach(c=>c.remove());
-    const frag=document.createDocumentFragment();
-    items.forEach(it=>frag.appendChild(createBlogCard(it)));   // feed sudah urut terbaru → terlama
-    galleryGrid.insertBefore(frag,galleryGrid.firstChild);
-    applyFilter(currentFilter);
+    blogError = entries.length ? (items.length?'':'Belum ada postingan yang memiliki gambar.') : 'Feed website kosong.';
+    if(items.length){
+      renderBlogItems(items);
+      try{ localStorage.setItem(BLOG_CACHE_KEY,JSON.stringify(items)); }catch(_){}
+    }
   }catch(err){
+    blogError='Gagal mengambil data dari website ('+err.message+').';
     console.warn('Gagal memuat postingan dari website:',err);
   }
+}
+
+// tampilkan cache terakhir dulu agar galeri langsung terisi saat halaman dibuka
+function loadBlogCache(){
+  try{
+    const items=JSON.parse(localStorage.getItem(BLOG_CACHE_KEY)||'[]');
+    if(Array.isArray(items)&&items.length) renderBlogItems(items.filter(i=>i&&i.imageUrl&&/^https:\/\//i.test(i.imageUrl)));
+  }catch(_){}
 }
 
 // ── Inisialisasi ──
@@ -1721,11 +1795,15 @@ async function loadBlogPosts(){
   if(savedPw){ isAdmin=true; adminPassword=savedPw; }
   updateAdminUI();
   applyFilter('all');
+  loadBlogCache();
   Promise.allSettled([loadGalleryData(),loadBlogPosts()]).then(()=>{
-    document.getElementById('empty-msg').textContent='Belum ada foto untuk kategori ini.';
-    document.getElementById('empty-sub').textContent='Coba pilih kategori lain';
+    document.getElementById('empty-msg').textContent=blogError||'Belum ada foto untuk kategori ini.';
+    document.getElementById('empty-sub').textContent=blogError?'Coba muat ulang halaman ini':'Coba pilih kategori lain';
     applyFilter(currentFilter);
   });
+  // postingan baru otomatis muncul: cek berkala + saat tab dibuka kembali
+  setInterval(loadBlogPosts,BLOG_REFRESH_MS);
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) loadBlogPosts(); });
   refreshPendingBadge();
 })();
 </script>

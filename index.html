@@ -1786,19 +1786,46 @@ const BLOG_CACHE_KEY = 'galeri_blog_cache_v2';
 let blogLastSig='', blogError='';
 const BLOG_MAX_ITEMS = 40;
 
-// Aturan kategori: dicocokkan dengan label + judul postingan (urutan = prioritas)
-const BLOG_CAT_RULES = [
-  ['prestasi', /prestasi|juara|lomba|olimpiade|kejuaraan|penghargaan|medali|festival|o2sn|fls2n|lks/i],
-  ['alumni',   /alumni|tracer|reuni|lulusan/i],
-  ['ekskul',   /ekskul|ekstrakurikuler|pramuka|paskibra|futsal|pmr|rohis|basket|voli|seni tari|marching|ekstra/i],
-  ['fasilitas',/fasilitas|gedung|revitalisasi|laboratorium|bengkel baru|ruang kelas|perpustakaan|aula/i],
-  ['jurusan',  /akuntansi|akl\b|bisnis daring|bisnis digital|dkv|desain komunikasi|teknik komputer|tkj|tjkt|kendaraan ringan|tkr\b|sepeda motor|tsm\b|perkantoran|mplb|praktik|praktikum|pkl|ukk|workshop|jurusan|industri|dudi/i]
+/* ── PENENTUAN KATEGORI ──────────────────────────────────────────────────
+   Urutan keputusan (berhenti di aturan pertama yang cocok):
+   1) LABEL Blogger yang sama persis dengan nama kategori  → paling akurat.
+      Cukup beri label "Prestasi", "Ekskul", "Alumni", "Fasilitas", "Jurusan"
+      atau "Event" pada postingan di Blogger.
+   2) Frasa KUAT di JUDUL (per kata utuh, bukan potongan kata).
+   3) Label program keahlian (mis. "Teknik Komputer Jaringan") → Jurusan.
+   4) Selain itu → Event (kegiatan/berita umum).
+   Isi postingan sengaja tidak dipakai agar kata umum tidak salah menggolongkan. */
+const BLOG_LABEL_MAP = {
+  prestasi:  ['prestasi','juara','kejuaraan'],
+  ekskul:    ['ekskul','ekstrakurikuler','ekstra kurikuler'],
+  alumni:    ['alumni','tracer study'],
+  fasilitas: ['fasilitas','sarana prasarana','sarpras'],
+  jurusan:   ['jurusan','program keahlian','kompetensi keahlian'],
+  event:     ['event','kegiatan','acara','agenda','pengumuman']
+};
+const BLOG_MAJOR_LABELS = ['akuntansi keuangan lembaga','bisnis daring pemasaran','otomatisasi tata kelola perkantoran',
+  'teknik bisnis sepeda motor','teknik kendaraan ringan otomotif','teknik komputer jaringan','multimedia'];
+const BLOG_TITLE_RULES = [   // urutan = prioritas; \b = batas kata utuh
+  ['prestasi',  /\b(juara|medali|piala|trofi|pemenang|menyabet|memborong|memenangi|memenangkan|kejuaraan|olimpiade|peraih|berprestasi|finalis|lks|o2sn|fls2n|penghargaan|(?:raih|meraih|torehkan|menorehkan)\s+(?:prestasi|juara|medali|piala|gelar|emas|perak|perunggu|peringkat|predikat))\b/],
+  ['ekskul',    /\b(ekskul|ekstrakurikuler|pramuka|paskibra|pmr|rohis|futsal|basket|voli|pencak silat|silat|marching band|hadroh|marawis|robotik|english club)\b/],
+  ['alumni',    /\b(alumni|reuni|tracer study)\b/],
+  ['fasilitas', /\b(fasilitas|gedung|revitalisasi|laboratorium|perpustakaan|aula|ruang kelas|sarana|prasarana|renovasi|pembangunan)\b/],
+  ['jurusan',   /\b(praktik|praktikum|ukk|workshop|pkl|prakerin|magang|kompetensi keahlian|program keahlian|jurusan|akuntansi|dkv|tkj|tjkt|tkr|tsm|bisnis digital|kunjungan industri|dudi)\b/]
 ];
 const BLOG_CAT_ICON = {ekskul:'⚽',jurusan:'🎓',event:'🎉',prestasi:'🏆',alumni:'🎓',fasilitas:'🏛️'};
 
 function blogGuessCategory(title, labels){
-  const hay = title+' '+labels.join(' ');
-  for(const [cat,re] of BLOG_CAT_RULES){ if(re.test(hay)) return cat; }
+  const norm=x=>String(x).toLowerCase().replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
+  const L=labels.map(norm);
+  // 1) label Blogger yang persis sama dengan nama kategori
+  for(const cat of Object.keys(BLOG_LABEL_MAP)){
+    if(L.some(l=>BLOG_LABEL_MAP[cat].includes(l))) return cat;
+  }
+  // 2) frasa kuat di judul
+  const t=norm(title);
+  for(const [cat,re] of BLOG_TITLE_RULES){ if(re.test(t)) return cat; }
+  // 3) label program keahlian
+  if(L.some(l=>BLOG_MAJOR_LABELS.includes(l))) return 'jurusan';
   return 'event';
 }
 
@@ -2044,6 +2071,7 @@ async function loadBlogPosts(){
     const items=entries.map(blogParseEntry).filter(Boolean).slice(0,BLOG_MAX_ITEMS);
     blogError = entries.length ? (items.length?'':'Belum ada postingan yang memiliki gambar.') : 'Feed website kosong.';
     if(items.length){
+      if(/[?&]debug\b/.test(location.search)) console.table(items.map(i=>({kategori:i.kategori,judul:i.judul,foto:i.photos.length})));
       renderBlogItems(items);
       try{ localStorage.setItem(BLOG_CACHE_KEY,JSON.stringify(items)); }catch(_){}
     }

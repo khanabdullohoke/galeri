@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Galeri Kegiatan — SMK Ciledug Al-Musaddadiyah</title>
 <meta name="description" content="Galeri foto dan video kegiatan SMKS Ciledug Al-Musaddadiyah Garut."/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https://script.google.com;"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src https://script.google.com https://script.googleusercontent.com https://www.smkciledugalmusaddadiyah.sch.id https://www.blogger.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' https://script.google.com;"/>
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -390,6 +390,19 @@ body.admin-mode .btn-add-nav{display:inline-flex}
 .g-delete-btn:hover{background:#c62828;transform:scale(1.1)}
 body.admin-mode .g-delete-btn{display:flex}
 body.admin-mode .g-card[data-source="dynamic"]{outline:2px dashed rgba(255,179,0,.55);outline-offset:-2px}
+.src-tag{
+  position:absolute;top:10px;left:10px;z-index:3;
+  background:rgba(255,255,255,.92);color:var(--blue-deep);
+  font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:5px;letter-spacing:.06em;text-transform:uppercase;
+}
+.g-body-date{font-size:11px;color:var(--text-muted);margin-left:auto}
+.lb-link{
+  display:inline-flex;align-items:center;gap:6px;margin-top:16px;
+  background:linear-gradient(135deg,var(--blue-mid),var(--blue-bright));color:#fff;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:12.5px;
+  padding:9px 18px;border-radius:50px;
+}
+.lb-link:hover{filter:brightness(1.08)}
 .admin-tag{
   display:none;position:absolute;top:10px;left:10px;z-index:3;
   background:rgba(255,179,0,.95);color:var(--blue-deep);
@@ -619,9 +632,9 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
     <h1>Galeri <em>Kegiatan</em> Sekolah</h1>
     <p>Dokumentasi foto dan video kegiatan SMKS Ciledug Al-Musaddadiyah — ekskul, prestasi, event, dan momen berharga lainnya.</p>
     <div class="hero-stats-row">
-      <div class="hero-stat-pill"><span class="num" id="h-total">24</span><span class="lbl">Total Media</span></div>
-      <div class="hero-stat-pill"><span class="num" id="h-foto">18</span><span class="lbl">📸 Foto</span></div>
-      <div class="hero-stat-pill"><span class="num" id="h-video">6</span><span class="lbl">🎬 Video</span></div>
+      <div class="hero-stat-pill"><span class="num" id="h-total">0</span><span class="lbl">Total Media</span></div>
+      <div class="hero-stat-pill"><span class="num" id="h-foto">0</span><span class="lbl">📸 Foto</span></div>
+      <div class="hero-stat-pill"><span class="num" id="h-video">0</span><span class="lbl">🎬 Video</span></div>
       <div class="hero-stat-pill"><span class="num">6</span><span class="lbl">Kategori</span></div>
     </div>
   </div>
@@ -649,422 +662,16 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
       <div class="section-label">Dokumentasi</div>
       <h2 id="sec-title">Semua Konten</h2>
     </div>
-    <div class="count-badge" id="count-badge">📁 24 item</div>
+    <div class="count-badge" id="count-badge">📁 0 item</div>
   </div>
 
   <div class="gallery-grid" id="gallery-grid">
 
-    <!-- ── EKSKUL ── -->
-    <div class="g-card wide" data-cat="ekskul" data-type="foto" data-title="Latihan Futsal Ekskul" data-desc="Sesi latihan rutin tim futsal SMKS Ciledug Al-Musaddadiyah di lapangan sekolah setiap Sabtu pagi.">
-      <div class="g-thumb ekskul">
-        <span class="thumb-icon">⚽</span>
-        <span class="badge-cat">Ekskul</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Latihan Futsal Ekskul</div>
-          <div class="g-ov-sub">Ekskul · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">⚽ Ekskul</div>
-        <div class="g-body-title">Latihan Futsal Ekskul</div>
-        <div class="g-body-desc">Sesi latihan rutin tim futsal di lapangan sekolah setiap Sabtu pagi.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="ekskul" data-type="video" data-title="Paskibra HUT RI ke-79" data-desc="Penampilan tim Paskibra dalam upacara bendera HUT Kemerdekaan RI ke-79 yang berlangsung khidmat.">
-      <div class="g-thumb ekskul">
-        <span class="thumb-icon">🚩</span>
-        <span class="badge-video">Video</span>
-        <span class="badge-cat">Ekskul</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Paskibra HUT RI ke-79</div>
-          <div class="g-ov-sub">Ekskul · Video</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🚩 Ekskul</div>
-        <div class="g-body-title">Paskibra HUT RI ke-79</div>
-        <div class="g-body-desc">Penampilan tim Paskibra dalam upacara kemerdekaan yang berlangsung khidmat.</div>
-        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="ekskul" data-type="foto" data-title="Pramuka Camping" data-desc="Kegiatan berkemah pramuka di area Gunung Papandayan bersama anggota aktif tingkat Penegak.">
-      <div class="g-thumb ekskul">
-        <span class="thumb-icon">⛺</span>
-        <span class="badge-cat">Ekskul</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Pramuka Camping</div>
-          <div class="g-ov-sub">Ekskul · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">⛺ Ekskul</div>
-        <div class="g-body-title">Pramuka Camping</div>
-        <div class="g-body-desc">Kegiatan berkemah pramuka di area Gunung Papandayan bersama anggota aktif.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="ekskul" data-type="video" data-title="Penampilan Seni Tari Sunda" data-desc="Pertunjukan seni tari tradisional Sunda oleh ekskul seni budaya dalam acara pentas tahunan.">
-      <div class="g-thumb ekskul">
-        <span class="thumb-icon">💃</span>
-        <span class="badge-video">Video</span>
-        <span class="badge-cat">Ekskul</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Penampilan Seni Tari Sunda</div>
-          <div class="g-ov-sub">Ekskul · Video</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">💃 Ekskul</div>
-        <div class="g-body-title">Penampilan Seni Tari Sunda</div>
-        <div class="g-body-desc">Pertunjukan seni tari tradisional Sunda dalam acara pentas budaya tahunan.</div>
-        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
-      </div>
-    </div>
-
-    <!-- ── JURUSAN ── -->
-    <div class="g-card" data-cat="jurusan" data-type="foto" data-title="Praktikum Jaringan TKJ" data-desc="Siswa jurusan TKJ sedang melakukan praktikum konfigurasi jaringan komputer di laboratorium sekolah.">
-      <div class="g-thumb jurusan">
-        <span class="thumb-icon">💻</span>
-        <span class="badge-cat">Jurusan</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Praktikum Jaringan TKJ</div>
-          <div class="g-ov-sub">Jurusan · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">💻 Jurusan TKJ</div>
-        <div class="g-body-title">Praktikum Jaringan TKJ</div>
-        <div class="g-body-desc">Praktikum konfigurasi jaringan komputer di laboratorium sekolah.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card wide" data-cat="jurusan" data-type="foto" data-title="Workshop Tune-Up Otomotif" data-desc="Kegiatan praktik tune-up kendaraan di bengkel jurusan Teknik Kendaraan Ringan dengan peralatan industri.">
-      <div class="g-thumb jurusan">
-        <span class="thumb-icon">🔧</span>
-        <span class="badge-cat">Jurusan</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Workshop Tune-Up Otomotif</div>
-          <div class="g-ov-sub">Jurusan TKR · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🔧 Jurusan TKR</div>
-        <div class="g-body-title">Workshop Tune-Up Otomotif</div>
-        <div class="g-body-desc">Praktik tune-up kendaraan di bengkel jurusan TKR dengan peralatan standar industri.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="jurusan" data-type="video" data-title="Uji Kompetensi Keahlian" data-desc="Pelaksanaan UKK siswa kelas XII di hadapan penguji dari dunia industri dan dunia usaha.">
-      <div class="g-thumb jurusan">
-        <span class="thumb-icon">📋</span>
-        <span class="badge-video">Video</span>
-        <span class="badge-cat">Jurusan</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Uji Kompetensi Keahlian</div>
-          <div class="g-ov-sub">Jurusan · Video</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">📋 UKK</div>
-        <div class="g-body-title">Uji Kompetensi Keahlian</div>
-        <div class="g-body-desc">Pelaksanaan UKK kelas XII di hadapan penguji dari dunia industri.</div>
-        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="jurusan" data-type="foto" data-title="Praktik Akuntansi Dasar" data-desc="Siswa jurusan Akuntansi dan Keuangan Lembaga berlatih membuat laporan keuangan perusahaan.">
-      <div class="g-thumb jurusan">
-        <span class="thumb-icon">📊</span>
-        <span class="badge-cat">Jurusan</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Praktik Akuntansi Dasar</div>
-          <div class="g-ov-sub">Jurusan AKL · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">📊 Jurusan AKL</div>
-        <div class="g-body-title">Praktik Akuntansi Dasar</div>
-        <div class="g-body-desc">Siswa AKL berlatih menyusun laporan keuangan perusahaan secara langsung.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <!-- ── EVENT ── -->
-    <div class="g-card wide" data-cat="event" data-type="foto" data-title="Wisuda & Perpisahan Kelas XII" data-desc="Momen haru wisuda dan perpisahan kelas XII angkatan 2024 bersama orang tua, guru, dan seluruh warga sekolah.">
-      <div class="g-thumb event">
-        <span class="thumb-icon">🎓</span>
-        <span class="badge-cat">Event</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Wisuda & Perpisahan Kelas XII</div>
-          <div class="g-ov-sub">Event Sekolah · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🎓 Event</div>
-        <div class="g-body-title">Wisuda & Perpisahan Kelas XII</div>
-        <div class="g-body-desc">Momen haru wisuda dan perpisahan kelas XII angkatan 2024 bersama orang tua dan guru.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="event" data-type="video" data-title="Pentas Seni Tahunan 2024" data-desc="Rangkaian penampilan kreativitas siswa dalam Pentas Seni dan Budaya tahun 2024.">
-      <div class="g-thumb event">
-        <span class="thumb-icon">🎭</span>
-        <span class="badge-video">Video</span>
-        <span class="badge-cat">Event</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Pentas Seni Tahunan 2024</div>
-          <div class="g-ov-sub">Event · Video</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🎭 Event</div>
-        <div class="g-body-title">Pentas Seni Tahunan 2024</div>
-        <div class="g-body-desc">Penampilan kreativitas siswa dalam Pentas Seni dan Budaya 2024.</div>
-        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="event" data-type="foto" data-title="MPLS Peserta Didik Baru" data-desc="Masa Pengenalan Lingkungan Sekolah untuk peserta didik baru tahun pelajaran 2024/2025.">
-      <div class="g-thumb event">
-        <span class="thumb-icon">🎒</span>
-        <span class="badge-cat">Event</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">MPLS Peserta Didik Baru</div>
-          <div class="g-ov-sub">Event · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🎒 Event</div>
-        <div class="g-body-title">MPLS Peserta Didik Baru</div>
-        <div class="g-body-desc">MPLS untuk peserta didik baru tahun pelajaran 2024/2025.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="event" data-type="foto" data-title="Peringatan Hari Guru Nasional" data-desc="Upacara dan seremoni peringatan Hari Guru Nasional yang berlangsung penuh khidmat dan haru.">
-      <div class="g-thumb event">
-        <span class="thumb-icon">👨‍🏫</span>
-        <span class="badge-cat">Event</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Peringatan Hari Guru Nasional</div>
-          <div class="g-ov-sub">Event · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">👨‍🏫 Event</div>
-        <div class="g-body-title">Peringatan Hari Guru Nasional</div>
-        <div class="g-body-desc">Upacara dan seremoni Hari Guru Nasional yang berlangsung penuh khidmat.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <!-- ── PRESTASI ── -->
-    <div class="g-card" data-cat="prestasi" data-type="foto" data-title="Juara LKS Tingkat Provinsi" data-desc="Tim LKS SMKS Ciledug meraih medali emas di kompetisi Lomba Kompetensi Siswa Jawa Barat 2024.">
-      <div class="g-thumb prestasi">
-        <span class="thumb-icon">🥇</span>
-        <span class="badge-cat">Prestasi</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Juara LKS Tingkat Provinsi</div>
-          <div class="g-ov-sub">Prestasi · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🥇 Prestasi</div>
-        <div class="g-body-title">Juara LKS Tingkat Provinsi</div>
-        <div class="g-body-desc">Meraih medali emas di kompetisi LKS Jawa Barat 2024.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card wide" data-cat="prestasi" data-type="foto" data-title="Penerimaan Penghargaan Adiwiyata" data-desc="Sekolah menerima penghargaan Adiwiyata atas keberhasilan program peduli lingkungan hidup.">
-      <div class="g-thumb prestasi">
-        <span class="thumb-icon">🏆</span>
-        <span class="badge-cat">Prestasi</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Penerimaan Penghargaan Adiwiyata</div>
-          <div class="g-ov-sub">Prestasi Sekolah · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🏆 Prestasi</div>
-        <div class="g-body-title">Penerimaan Penghargaan Adiwiyata</div>
-        <div class="g-body-desc">Penghargaan Adiwiyata atas keberhasilan program peduli lingkungan hidup sekolah.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="prestasi" data-type="foto" data-title="OSN Bidang Matematika" data-desc="Siswa terpilih mewakili Kabupaten Garut di Olimpiade Sains Nasional bidang Matematika.">
-      <div class="g-thumb prestasi">
-        <span class="thumb-icon">🔢</span>
-        <span class="badge-cat">Prestasi</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">OSN Bidang Matematika</div>
-          <div class="g-ov-sub">Prestasi · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🔢 Prestasi</div>
-        <div class="g-body-title">OSN Bidang Matematika</div>
-        <div class="g-body-desc">Mewakili Kab. Garut di Olimpiade Sains Nasional bidang Matematika.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <!-- ── ALUMNI ── -->
-    <div class="g-card wide" data-cat="alumni" data-type="foto" data-title="Reuni Akbar Alumni CALM 2024" data-desc="Pertemuan akbar Alumni CALM — kumpul bersama para alumni lintas angkatan di aula sekolah tercinta.">
-      <div class="g-thumb alumni">
-        <span class="thumb-icon">🤝</span>
-        <span class="badge-cat">Alumni CALM</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Reuni Akbar Alumni CALM 2024</div>
-          <div class="g-ov-sub">Alumni CALM · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🎓 Alumni CALM</div>
-        <div class="g-body-title">Reuni Akbar Alumni CALM 2024</div>
-        <div class="g-body-desc">Pertemuan akbar alumni lintas angkatan di aula sekolah tercinta.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="alumni" data-type="video" data-title="Bakti Sosial Alumni CALM" data-desc="Kegiatan bakti sosial Alumni CALM memberikan beasiswa dan bantuan kepada siswa berprestasi dari keluarga kurang mampu.">
-      <div class="g-thumb alumni">
-        <span class="thumb-icon">❤️</span>
-        <span class="badge-video">Video</span>
-        <span class="badge-cat">Alumni CALM</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Bakti Sosial Alumni CALM</div>
-          <div class="g-ov-sub">Alumni CALM · Video</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">❤️ Alumni CALM</div>
-        <div class="g-body-title">Bakti Sosial Alumni CALM</div>
-        <div class="g-body-desc">Pemberian beasiswa dan bantuan kepada siswa berprestasi dari keluarga kurang mampu.</div>
-        <div class="g-body-foot"><span class="g-type-pill video">🎬 Video</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="alumni" data-type="foto" data-title="Halal Bihalal Alumni CALM" data-desc="Silaturahmi Idul Fitri yang mempertemukan alumni dari berbagai angkatan dalam suasana penuh keakraban.">
-      <div class="g-thumb alumni">
-        <span class="thumb-icon">🌙</span>
-        <span class="badge-cat">Alumni CALM</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Halal Bihalal Alumni CALM</div>
-          <div class="g-ov-sub">Alumni CALM · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🌙 Alumni CALM</div>
-        <div class="g-body-title">Halal Bihalal Alumni CALM</div>
-        <div class="g-body-desc">Silaturahmi Idul Fitri alumni lintas angkatan dalam suasana penuh keakraban.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <!-- ── FASILITAS ── -->
-    <div class="g-card" data-cat="fasilitas" data-type="foto" data-title="Laboratorium Komputer" data-desc="Fasilitas lab komputer modern dengan 40 unit PC dan koneksi internet berkecepatan tinggi.">
-      <div class="g-thumb fasilitas">
-        <span class="thumb-icon">🖥️</span>
-        <span class="badge-cat">Fasilitas</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Laboratorium Komputer</div>
-          <div class="g-ov-sub">Fasilitas · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🖥️ Fasilitas</div>
-        <div class="g-body-title">Laboratorium Komputer</div>
-        <div class="g-body-desc">Lab modern dengan 40 unit PC dan koneksi internet berkecepatan tinggi.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="fasilitas" data-type="foto" data-title="Masjid Al-Musaddadiyah" data-desc="Masjid Al-Musaddadiyah yang menjadi pusat kegiatan keagamaan seluruh warga sekolah.">
-      <div class="g-thumb fasilitas">
-        <span class="thumb-icon">🕌</span>
-        <span class="badge-cat">Fasilitas</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Masjid Al-Musaddadiyah</div>
-          <div class="g-ov-sub">Fasilitas · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🕌 Fasilitas</div>
-        <div class="g-body-title">Masjid Al-Musaddadiyah</div>
-        <div class="g-body-desc">Pusat kegiatan keagamaan seluruh warga sekolah.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card wide" data-cat="fasilitas" data-type="foto" data-title="Aula & Lapangan Utama" data-desc="Aula serbaguna dan lapangan olahraga yang menjadi pusat berbagai kegiatan dan kompetisi sekolah.">
-      <div class="g-thumb fasilitas">
-        <span class="thumb-icon">🏟️</span>
-        <span class="badge-cat">Fasilitas</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Aula & Lapangan Utama</div>
-          <div class="g-ov-sub">Fasilitas · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🏟️ Fasilitas</div>
-        <div class="g-body-title">Aula & Lapangan Utama</div>
-        <div class="g-body-desc">Aula serbaguna dan lapangan olahraga pusat berbagai kegiatan dan kompetisi sekolah.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
-
-    <div class="g-card" data-cat="fasilitas" data-type="foto" data-title="Bengkel Otomotif TKR" data-desc="Bengkel praktik lengkap dengan peralatan standar industri otomotif untuk jurusan TKR.">
-      <div class="g-thumb fasilitas">
-        <span class="thumb-icon">🛠️</span>
-        <span class="badge-cat">Fasilitas</span>
-        <div class="g-overlay">
-          <div class="g-ov-title">Bengkel Otomotif TKR</div>
-          <div class="g-ov-sub">Fasilitas · Foto</div>
-          <button class="g-ov-btn">Lihat Detail</button>
-        </div>
-      </div>
-      <div class="g-body">
-        <div class="g-body-cat">🛠️ Fasilitas</div>
-        <div class="g-body-title">Bengkel Otomotif TKR</div>
-        <div class="g-body-desc">Bengkel lengkap dengan peralatan standar industri otomotif untuk praktik TKR.</div>
-        <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span></div>
-      </div>
-    </div>
 
     <div class="empty-state" id="empty-state">
       <div class="ei">🔍</div>
-      <p>Tidak ada konten untuk kategori ini.</p>
-      <span style="font-size:13px;color:var(--text-muted)">Coba pilih kategori lain</span>
+      <p id="empty-msg">Memuat foto kegiatan dari website…</p>
+      <span id="empty-sub" style="font-size:13px;color:var(--text-muted)">Mohon tunggu sebentar</span>
     </div>
 
   </div><!-- /gallery-grid -->
@@ -1119,6 +726,7 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
       </div>
       <div class="lb-title" id="lb-title"></div>
       <div class="lb-desc" id="lb-desc"></div>
+      <a class="lb-link" id="lb-link" target="_blank" rel="noopener noreferrer" style="display:none">📰 Baca selengkapnya di website →</a>
     </div>
   </div>
 </div>
@@ -1374,6 +982,9 @@ function openLightbox(c){
   typeBadge.className='lb-type-badge '+(type==='video'?'video':'foto');
   document.getElementById('lb-title').textContent=c.dataset.title;
   document.getElementById('lb-desc').textContent=c.dataset.desc;
+  const lbLink=document.getElementById('lb-link');
+  if(c.dataset.url){ lbLink.href=c.dataset.url; lbLink.style.display='inline-flex'; }
+  else{ lbLink.removeAttribute('href'); lbLink.style.display='none'; }
   const lbThumb=document.getElementById('lb-thumb');
   lbThumb.className='lb-thumb '+cat;
   if(thumb && thumb.style.backgroundImage){
@@ -1976,13 +1587,145 @@ async function loadGalleryData(){
   }
 }
 
+/* ==========================================================================
+   GALERI OTOMATIS DARI POSTINGAN WEBSITE (Blogger feed)
+   Setiap postingan yang memiliki gambar akan otomatis menjadi kartu galeri:
+   judul = judul postingan, keterangan = cuplikan isi, foto = gambar pertama.
+   ========================================================================== */
+const BLOG_FEED_URL = 'https://www.smkciledugalmusaddadiyah.sch.id/feeds/posts/default?alt=json&max-results=40';
+const BLOG_MAX_ITEMS = 40;
+
+// Aturan kategori: dicocokkan dengan label + judul postingan (urutan = prioritas)
+const BLOG_CAT_RULES = [
+  ['prestasi', /prestasi|juara|lomba|olimpiade|kejuaraan|penghargaan|medali|festival|o2sn|fls2n|lks/i],
+  ['alumni',   /alumni|tracer|reuni|lulusan/i],
+  ['ekskul',   /ekskul|ekstrakurikuler|pramuka|paskibra|futsal|pmr|rohis|basket|voli|seni tari|marching|ekstra/i],
+  ['fasilitas',/fasilitas|gedung|revitalisasi|laboratorium|bengkel baru|ruang kelas|perpustakaan|aula/i],
+  ['jurusan',  /akuntansi|akl\b|bisnis daring|bisnis digital|dkv|desain komunikasi|teknik komputer|tkj|tjkt|kendaraan ringan|tkr\b|sepeda motor|tsm\b|perkantoran|mplb|praktik|praktikum|pkl|ukk|workshop|jurusan|industri|dudi/i]
+];
+const BLOG_CAT_ICON = {ekskul:'⚽',jurusan:'🎓',event:'🎉',prestasi:'🏆',alumni:'🎓',fasilitas:'🏛️'};
+
+function blogGuessCategory(title, labels){
+  const hay = title+' '+labels.join(' ');
+  for(const [cat,re] of BLOG_CAT_RULES){ if(re.test(hay)) return cat; }
+  return 'event';
+}
+
+// Perbesar ukuran gambar Blogger (s72-c, w640-h480, dst.) agar tajam tapi tetap ringan
+function blogUpscaleImage(url){
+  if(!/^https:\/\//i.test(url)) return '';
+  return url.replace(/\/(?:rw-)?(?:s\d+|w\d+(?:-h\d+)?)(?:-[a-z]+)*\/([^\/]+)$/i,'/w800/$1');
+}
+
+function blogParseEntry(entry){
+  const title=(entry.title&&entry.title.$t||'').trim();
+  const html=(entry.content&&entry.content.$t)||(entry.summary&&entry.summary.$t)||'';
+  if(!title||!html) return null;
+
+  const doc=new DOMParser().parseFromString(html,'text/html');   // tidak mengeksekusi skrip
+  // cari gambar pertama; abaikan emoji/ikon kecil
+  let imgUrl='';
+  for(const img of doc.querySelectorAll('img')){
+    const src=img.getAttribute('src')||'';
+    const w=parseInt(img.getAttribute('width')||'0',10);
+    if(/^https:\/\//i.test(src) && !/emoji|favicon|\/s16\/|\/s32\//i.test(src) && (!w||w>=120)){ imgUrl=src; break; }
+  }
+  if(!imgUrl && entry.media$thumbnail) imgUrl=entry.media$thumbnail.url||'';
+  imgUrl=blogUpscaleImage(imgUrl);
+  if(!imgUrl) return null;                                        // hanya postingan yang ada gambarnya
+
+  doc.querySelectorAll('script,style,img,figure,iframe').forEach(n=>n.remove());
+  const text=(doc.body.textContent||'').replace(/\s+/g,' ').trim();
+  const cut=(n)=>{ if(text.length<=n) return text; const t=text.slice(0,n); return t.slice(0,t.lastIndexOf(' ')>n*0.6?t.lastIndexOf(' '):n).trim()+'…'; };
+
+  const labels=(entry.category||[]).map(c=>c.term).filter(Boolean);
+  const link=((entry.link||[]).find(l=>l.rel==='alternate')||{}).href||'';
+  const idRaw=(entry.id&&entry.id.$t)||link||title;
+  return {
+    id:'blog-'+idRaw.replace(/[^a-z0-9]/gi,'').slice(-24),
+    judul:title,
+    kategori:blogGuessCategory(title,labels),
+    imageUrl:imgUrl,
+    ringkas:cut(150),
+    deskripsi:cut(420) || title,
+    url:/^https:\/\//i.test(link)?link:'',
+    tanggal:entry.published&&entry.published.$t||''
+  };
+}
+
+function blogFormatDate(iso){
+  const d=new Date(iso); if(isNaN(d)) return '';
+  return d.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function createBlogCard(item){
+  const card=document.createElement('div');
+  card.className='g-card';
+  card.dataset.cat=item.kategori;
+  card.dataset.type='foto';
+  card.dataset.title=item.judul;
+  card.dataset.desc=item.deskripsi;
+  card.dataset.url=item.url;
+  card.dataset.source='blog';
+  card.dataset.id=item.id;
+
+  const catLabel=escapeHtml(catLabels[item.kategori]||item.kategori);
+  const icon=BLOG_CAT_ICON[item.kategori]||'🖼️';
+  const tgl=blogFormatDate(item.tanggal);
+  card.innerHTML=`
+    <div class="g-thumb ${item.kategori}">
+      <span class="src-tag">📰 Dari Website</span>
+      <span class="badge-cat">${catLabel}</span>
+      <div class="g-overlay">
+        <div class="g-ov-title">${escapeHtml(item.judul)}</div>
+        <div class="g-ov-sub">${catLabel} · Foto</div>
+        <button class="g-ov-btn">Lihat Detail</button>
+      </div>
+    </div>
+    <div class="g-body">
+      <div class="g-body-cat">${icon} ${catLabel}</div>
+      <div class="g-body-title">${escapeHtml(item.judul)}</div>
+      <div class="g-body-desc">${escapeHtml(item.ringkas||item.judul)}</div>
+      <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span>${tgl?`<span class="g-body-date">${escapeHtml(tgl)}</span>`:''}</div>
+    </div>`;
+  const thumbEl=card.querySelector('.g-thumb');
+  thumbEl.style.backgroundImage=`url("${item.imageUrl}")`;
+  thumbEl.style.backgroundSize='cover';
+  thumbEl.style.backgroundPosition='center';
+  return card;
+}
+
+async function loadBlogPosts(){
+  try{
+    const res=await fetch(BLOG_FEED_URL,{headers:{'Accept':'application/json'}});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    const entries=(data.feed&&data.feed.entry)||[];
+    const items=entries.map(blogParseEntry).filter(Boolean).slice(0,BLOG_MAX_ITEMS);
+    if(!items.length) return;
+
+    // hapus kartu blog lama (jika dimuat ulang), lalu pasang yang terbaru di bagian atas grid
+    galleryGrid.querySelectorAll('.g-card[data-source="blog"]').forEach(c=>c.remove());
+    const frag=document.createDocumentFragment();
+    items.forEach(it=>frag.appendChild(createBlogCard(it)));   // feed sudah urut terbaru → terlama
+    galleryGrid.insertBefore(frag,galleryGrid.firstChild);
+    applyFilter(currentFilter);
+  }catch(err){
+    console.warn('Gagal memuat postingan dari website:',err);
+  }
+}
+
 // ── Inisialisasi ──
 (function init(){
   const savedPw=sessionStorage.getItem('galeri_admin_pw');
   if(savedPw){ isAdmin=true; adminPassword=savedPw; }
   updateAdminUI();
   applyFilter('all');
-  loadGalleryData();
+  Promise.allSettled([loadGalleryData(),loadBlogPosts()]).then(()=>{
+    document.getElementById('empty-msg').textContent='Belum ada foto untuk kategori ini.';
+    document.getElementById('empty-sub').textContent='Coba pilih kategori lain';
+    applyFilter(currentFilter);
+  });
   refreshPendingBadge();
 })();
 </script>

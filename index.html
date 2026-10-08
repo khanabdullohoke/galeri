@@ -390,6 +390,137 @@ body.admin-mode .btn-add-nav{display:inline-flex}
 .g-delete-btn:hover{background:#c62828;transform:scale(1.1)}
 body.admin-mode .g-delete-btn{display:flex}
 body.admin-mode .g-card[data-source="dynamic"]{outline:2px dashed rgba(255,179,0,.55);outline-offset:-2px}
+
+/* ── ALBUM DIGITAL (postingan website) ── */
+:root{--cols:6}
+@media(max-width:1100px){:root{--cols:4}}
+@media(max-width:800px){:root{--cols:3}}
+@media(max-width:520px){:root{--cols:2.3}}
+#album-list{display:flex;flex-direction:column;gap:44px;margin-bottom:36px}
+.album{border-top:1px solid rgba(21,101,192,.14);padding-top:22px;animation:albumIn .6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes albumIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.album.hidden,.album.pg-hidden{display:none}
+.album-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:16px}
+.album-kicker{
+  display:flex;align-items:center;gap:10px;margin-bottom:8px;
+  font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-bright);
+}
+.album-kicker::before{content:'';width:22px;height:2px;background:var(--gold);flex-shrink:0}
+.album-title{
+  font-size:clamp(18px,2.3vw,26px);font-weight:800;color:var(--text-dark);
+  letter-spacing:-.01em;line-height:1.28;max-width:780px;
+}
+.album-tools{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.album-count{font-size:12px;font-weight:600;color:var(--text-muted);margin-right:4px;white-space:nowrap}
+.a-arrow{
+  width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--white);color:var(--blue-deep);border:1.5px solid rgba(21,101,192,.22);
+  font-size:20px;line-height:1;padding-bottom:2px;transition:background var(--transition),color var(--transition),opacity var(--transition);
+}
+.a-arrow:hover:not(:disabled){background:var(--blue-deep);color:#fff;border-color:var(--blue-deep)}
+.a-arrow:disabled{opacity:.3;cursor:default}
+.album:not(.scrollable) .a-arrow{display:none}
+@media(hover:none){.a-arrow{display:none!important}}
+.album-strip{
+  --gap:12px;display:flex;gap:var(--gap);overflow-x:auto;
+  scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+}
+.album-strip::-webkit-scrollbar{display:none}
+.album-strip.dragging{scroll-snap-type:none;cursor:grabbing;user-select:none}
+.tile{
+  position:relative;flex:0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  aspect-ratio:4/3;border:0;padding:0;border-radius:12px;overflow:hidden;cursor:zoom-in;
+  scroll-snap-align:start;
+  background:linear-gradient(110deg,var(--blue-pale) 30%,#fff 50%,var(--blue-pale) 70%) 0 0/200% 100%;
+  animation:shimmer 1.4s linear infinite;
+}
+.tile.loaded{animation:none;background:var(--sky)}
+.tile.failed{display:none}
+@keyframes shimmer{to{background-position:-200% 0}}
+.tile img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .5s,transform .7s cubic-bezier(.2,.7,.2,1);
+  pointer-events:none;-webkit-user-drag:none;user-select:none;
+}
+.tile.loaded img{opacity:1}
+.tile::after{
+  content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;
+  background:linear-gradient(to top,rgba(6,30,92,.55),transparent 55%);
+}
+.tile:hover img{transform:scale(1.07)}
+.tile:hover::after{opacity:1}
+.tile-zoom{
+  position:absolute;right:10px;bottom:10px;z-index:2;width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  background:rgba(255,255,255,.92);color:var(--blue-deep);
+  opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s;
+}
+.tile:hover .tile-zoom,.tile:focus-visible .tile-zoom{opacity:1;transform:none}
+.tile:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.album.fit .tile{flex:1 1 0;max-width:320px}
+@media(max-width:560px){.album-count{display:none}.album-head{margin-bottom:12px}}
+
+/* ── PEMBUKA FOTO (viewer) ── */
+.viewer{
+  position:fixed;inset:0;z-index:3000;display:none;flex-direction:column;
+  background:rgba(5,14,38,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;
+}
+.viewer.open{display:flex;animation:vIn .25s ease}
+@keyframes vIn{from{opacity:0}to{opacity:1}}
+.v-top{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 20px;padding-top:max(14px,env(safe-area-inset-top));
+}
+.v-meta{min-width:0}
+.v-cat{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:3px}
+.v-title{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(14px,2vw,19px);line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.v-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.v-count{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.7);font-variant-numeric:tabular-nums}
+.v-link{
+  font-size:12px;font-weight:700;color:var(--gold-light);border:1px solid rgba(255,213,79,.4);
+  padding:7px 14px;border-radius:50px;white-space:nowrap;transition:background var(--transition);
+}
+.v-link:hover{background:rgba(255,213,79,.14)}
+.v-close{
+  width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.08);color:#fff;font-size:15px;transition:background var(--transition);
+}
+.v-close:hover{background:rgba(255,255,255,.2)}
+.v-stage{position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:0 64px;touch-action:pan-y}
+.v-stage img{
+  max-width:100%;max-height:100%;object-fit:contain;border-radius:6px;
+  opacity:0;transition:opacity .35s;box-shadow:0 20px 70px rgba(0,0,0,.5);user-select:none;-webkit-user-drag:none;
+}
+.v-stage img.ready{opacity:1}
+.v-nav{
+  position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:26px;line-height:1;padding-bottom:3px;
+  transition:background var(--transition);
+}
+.v-nav:hover{background:rgba(255,255,255,.25)}
+.v-nav.prev{left:12px}.v-nav.next{right:12px}
+.viewer.single .v-nav,.viewer.single .v-thumbs{display:none}
+.v-thumbs{
+  position:relative;display:flex;gap:8px;overflow-x:auto;padding:12px 20px;padding-bottom:max(16px,env(safe-area-inset-bottom));
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.3) transparent;justify-content:safe center;
+}
+.v-thumb{
+  flex:0 0 auto;width:78px;height:58px;border-radius:7px;overflow:hidden;padding:0;border:2px solid transparent;
+  opacity:.5;transition:opacity .25s,border-color .25s;background:rgba(255,255,255,.08);
+}
+.v-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.v-thumb:hover{opacity:.85}
+.v-thumb.active{opacity:1;border-color:var(--gold)}
+@media(max-width:700px){
+  .v-stage{padding:0 8px}
+  .v-nav{display:none}
+  .v-link{display:none}
+  .v-thumb{width:62px;height:46px}
+}
+
 .more-wrap{display:flex;justify-content:center;margin:28px 0 8px}
 .more-btn{
   background:linear-gradient(135deg,var(--blue-mid),var(--blue-bright));color:#fff;border:none;
@@ -672,6 +803,8 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
     <div class="count-badge" id="count-badge">📁 0 item</div>
   </div>
 
+  <div id="album-list" aria-live="polite"></div>
+
   <div class="gallery-grid" id="gallery-grid">
 
 
@@ -923,6 +1056,23 @@ body.admin-mode .g-card[data-source="dynamic"] .admin-tag{display:inline-flex}
   </div>
 </div>
 
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Pembuka foto">
+  <div class="v-top">
+    <div class="v-meta"><div class="v-cat" id="v-cat"></div><div class="v-title" id="v-title"></div></div>
+    <div class="v-actions">
+      <span class="v-count" id="v-count"></span>
+      <a class="v-link" id="v-link" target="_blank" rel="noopener noreferrer" style="display:none">Baca postingan ↗</a>
+      <button type="button" class="v-close" id="v-close" aria-label="Tutup">✕</button>
+    </div>
+  </div>
+  <div class="v-stage" id="v-stage">
+    <button type="button" class="v-nav prev" id="v-prev" aria-label="Foto sebelumnya">‹</button>
+    <img id="v-img" alt=""/>
+    <button type="button" class="v-nav next" id="v-next" aria-label="Foto berikutnya">›</button>
+  </div>
+  <div class="v-thumbs" id="v-thumbs"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -949,33 +1099,26 @@ const galleryGrid = document.getElementById('gallery-grid');
 const catLabels={all:'Semua Konten',ekskul:'Ekskul',jurusan:'Jurusan',event:'Event',prestasi:'Prestasi',alumni:'Alumni CALM',fasilitas:'Fasilitas'};
 let currentFilter='all';
 
-// ── PAGING: jumlah foto website yang tampil mengikuti lebar halaman (kolom × baris penuh) ──
-const PAGE_ROWS_FIRST=3, PAGE_ROWS_STEP=3;
-let pageRows=PAGE_ROWS_FIRST;
+// ── PAGING ALBUM: tampilkan album bertahap agar halaman tetap ringan ──
+const ALBUM_PAGE_FIRST=6, ALBUM_PAGE_STEP=6;
+let albumLimit=ALBUM_PAGE_FIRST;
+const albumList=document.getElementById('album-list');
 const moreWrap=document.createElement('div');
 moreWrap.className='more-wrap'; moreWrap.style.display='none';
 moreWrap.innerHTML='<button type="button" class="more-btn" id="more-btn"></button>';
-galleryGrid.parentNode.insertBefore(moreWrap,galleryGrid.nextSibling);
-function gridCols(){
-  const t=getComputedStyle(galleryGrid).gridTemplateColumns||'';
-  return Math.max(1,t.split(' ').filter(x=>x&&x!=='none').length);
-}
+albumList.parentNode.insertBefore(moreWrap,galleryGrid);
 function applyPaging(){
-  const limit=gridCols()*pageRows;
   let n=0;
-  galleryGrid.querySelectorAll('.g-card:not(.hidden)').forEach(c=>{
-    if(c.dataset.source==='blog'){ n++; c.classList.toggle('pg-hidden',n>limit); }   // kartu manual selalu tampil
-    else c.classList.remove('pg-hidden');
-  });
-  const sisa=n-limit;
+  albumList.querySelectorAll('.album:not(.hidden)').forEach(a=>{ n++; a.classList.toggle('pg-hidden',n>albumLimit); });
+  const sisa=n-albumLimit;
   moreWrap.style.display=sisa>0?'flex':'none';
-  if(sisa>0) document.getElementById('more-btn').textContent='Tampilkan lebih banyak ('+sisa+' lagi)';
+  if(sisa>0) document.getElementById('more-btn').textContent='Tampilkan album lainnya ('+sisa+')';
 }
-document.getElementById('more-btn').addEventListener('click',()=>{pageRows+=PAGE_ROWS_STEP;applyPaging();});
-let _rzT; window.addEventListener('resize',()=>{clearTimeout(_rzT);_rzT=setTimeout(applyPaging,150);});
+document.getElementById('more-btn').addEventListener('click',()=>{albumLimit+=ALBUM_PAGE_STEP;applyPaging();requestAnimationFrame(refreshAlbumUI);});
+let _rzT; window.addEventListener('resize',()=>{clearTimeout(_rzT);_rzT=setTimeout(refreshAlbumUI,150);});
 
 function applyFilter(f){
-  if(f!==currentFilter) pageRows=PAGE_ROWS_FIRST;
+  if(f!==currentFilter) albumLimit=ALBUM_PAGE_FIRST;
   currentFilter=f;
   filterBtns.forEach(b=>b.classList.toggle('active',b.dataset.filter===f));
   const cards=document.querySelectorAll('.g-card');
@@ -991,13 +1134,23 @@ function applyFilter(f){
       if(c.dataset.type==='foto')foto++; else video++;
     }
   });
-  emptyState.style.display=vis===0?'flex':'none';
+  let albums=0,photos=0;
+  albumList.querySelectorAll('.album').forEach(a=>{
+    const show=f==='all'||a.dataset.cat===f;
+    a.classList.toggle('hidden',!show);
+    if(show){ albums++; photos+=parseInt(a.dataset.count||'0',10); }
+  });
+  emptyState.style.display=(vis+albums)===0?'flex':'none';
   secTitle.textContent=catLabels[f]||f;
-  countBadge.textContent='📁 '+vis+' item';
-  document.getElementById('h-total').textContent=vis;
-  document.getElementById('h-foto').textContent=foto;
+  const parts=[];
+  if(albums) parts.push(albums+' album · '+photos+' foto');
+  if(vis) parts.push(vis+' konten');
+  countBadge.textContent='📁 '+(parts.join(' + ')||'0 item');
+  document.getElementById('h-total').textContent=vis+photos;
+  document.getElementById('h-foto').textContent=foto+photos;
   document.getElementById('h-video').textContent=video;
   applyPaging();
+  requestAnimationFrame(refreshAlbumUI);
 }
 filterBtns.forEach(btn=>btn.addEventListener('click',()=>applyFilter(btn.dataset.filter)));
 
@@ -1629,7 +1782,7 @@ async function loadGalleryData(){
 const BLOG_FEED_BASE = 'https://www.smkciledugalmusaddadiyah.sch.id/feeds/posts/default';
 const BLOG_FEED_URL = BLOG_FEED_BASE+'?alt=json&max-results=40';
 const BLOG_REFRESH_MS = 5*60*1000;      // cek postingan baru tiap 5 menit
-const BLOG_CACHE_KEY = 'galeri_blog_cache_v1';
+const BLOG_CACHE_KEY = 'galeri_blog_cache_v2';
 let blogLastSig='', blogError='';
 const BLOG_MAX_ITEMS = 40;
 
@@ -1655,26 +1808,34 @@ function blogUpscaleImage(url){
   return url.replace(/\/(?:rw-)?(?:s\d+|w\d+(?:-h\d+)?)(?:-[a-z]+)*\/([^\/]+)$/i,'/w800/$1');
 }
 
+// Ubah URL gambar Blogger menjadi templat berukuran fleksibel: .../{S}/nama.jpg
+function blogTemplate(url){
+  if(typeof url!=='string'||!/^https:\/\//i.test(url)) return '';
+  const re=/\/(?:rw-)?(?:s\d+|w\d+(?:-h\d+)?)(?:-[a-z]+)*\/([^\/]+)$/i;
+  return re.test(url)?url.replace(re,'/{S}/$1'):url;
+}
+const blogSized=(t,size)=>t.replace('{S}',size);
+
 function blogParseEntry(entry){
   const title=(entry.title&&entry.title.$t||'').trim();
   const html=(entry.content&&entry.content.$t)||(entry.summary&&entry.summary.$t)||'';
-  if(!title||!html) return null;
+  if(!title) return null;
 
   const doc=new DOMParser().parseFromString(html,'text/html');   // tidak mengeksekusi skrip
-  // cari gambar pertama; abaikan emoji/ikon kecil
-  let imgUrl='';
-  for(const img of doc.querySelectorAll('img')){
+  // kumpulkan SEMUA foto di postingan (tanpa duplikat, tanpa ikon/emoji kecil)
+  const photos=[], seen=new Set();
+  doc.querySelectorAll('img').forEach(img=>{
     const src=img.getAttribute('src')||'';
     const w=parseInt(img.getAttribute('width')||'0',10);
-    if(/^https:\/\//i.test(src) && !/emoji|favicon|\/s16\/|\/s32\//i.test(src) && (!w||w>=120)){ imgUrl=src; break; }
+    if(!/^https:\/\//i.test(src)||/emoji|favicon|\/s16\/|\/s32\//i.test(src)||(w&&w<120)) return;
+    const t=blogTemplate(src);
+    if(!t||seen.has(t)) return;
+    seen.add(t); photos.push(t);
+  });
+  if(!photos.length&&entry.media$thumbnail){            // feed mode "Singkat": hanya ada 1 gambar mini
+    const t=blogTemplate(entry.media$thumbnail.url||''); if(t) photos.push(t);
   }
-  if(!imgUrl && entry.media$thumbnail) imgUrl=entry.media$thumbnail.url||'';
-  imgUrl=blogUpscaleImage(imgUrl);
-  if(!imgUrl) return null;                                        // hanya postingan yang ada gambarnya
-
-  doc.querySelectorAll('script,style,img,figure,iframe').forEach(n=>n.remove());
-  const text=(doc.body.textContent||'').replace(/\s+/g,' ').trim();
-  const cut=(n)=>{ if(text.length<=n) return text; const t=text.slice(0,n); return t.slice(0,t.lastIndexOf(' ')>n*0.6?t.lastIndexOf(' '):n).trim()+'…'; };
+  if(!photos.length) return null;                        // hanya postingan yang ada gambarnya
 
   const labels=(entry.category||[]).map(c=>c.term).filter(Boolean);
   const link=((entry.link||[]).find(l=>l.rel==='alternate')||{}).href||'';
@@ -1683,9 +1844,7 @@ function blogParseEntry(entry){
     id:'blog-'+idRaw.replace(/[^a-z0-9]/gi,'').slice(-24),
     judul:title,
     kategori:blogGuessCategory(title,labels),
-    imageUrl:imgUrl,
-    ringkas:cut(150),
-    deskripsi:cut(420) || title,
+    photos:photos,
     url:/^https:\/\//i.test(link)?link:'',
     tanggal:entry.published&&entry.published.$t||''
   };
@@ -1696,42 +1855,155 @@ function blogFormatDate(iso){
   return d.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
 }
 
-function createBlogCard(item){
-  const card=document.createElement('div');
-  card.className='g-card';
-  card.dataset.cat=item.kategori;
-  card.dataset.type='foto';
-  card.dataset.title=item.judul;
-  card.dataset.desc=item.deskripsi;
-  card.dataset.url=item.url;
-  card.dataset.source='blog';
-  card.dataset.id=item.id;
-
-  const catLabel=escapeHtml(catLabels[item.kategori]||item.kategori);
-  const icon=BLOG_CAT_ICON[item.kategori]||'🖼️';
-  const tgl=blogFormatDate(item.tanggal);
-  card.innerHTML=`
-    <div class="g-thumb ${item.kategori}">
-      <span class="src-tag">📰 Dari Website</span>
-      <span class="badge-cat">${catLabel}</span>
-      <div class="g-overlay">
-        <div class="g-ov-title">${escapeHtml(item.judul)}</div>
-        <div class="g-ov-sub">${catLabel} · Foto</div>
-        <button class="g-ov-btn">Lihat Detail</button>
-      </div>
-    </div>
-    <div class="g-body">
-      <div class="g-body-cat">${icon} ${catLabel}</div>
-      <div class="g-body-title">${escapeHtml(item.judul)}</div>
-      <div class="g-body-desc">${escapeHtml(item.ringkas||item.judul)}</div>
-      <div class="g-body-foot"><span class="g-type-pill foto">📸 Foto</span>${tgl?`<span class="g-body-date">${escapeHtml(tgl)}</span>`:''}</div>
-    </div>`;
-  const thumbEl=card.querySelector('.g-thumb');
-  thumbEl.style.backgroundImage=`url("${item.imageUrl}")`;
-  thumbEl.style.backgroundSize='cover';
-  thumbEl.style.backgroundPosition='center';
-  return card;
+function blogKicker(item){
+  return [catLabels[item.kategori]||item.kategori, blogFormatDate(item.tanggal)].filter(Boolean).join(' · ');
 }
+
+function updateAlbumArrows(el){
+  const strip=el.querySelector('.album-strip');
+  if(!strip||el.offsetParent===null) return;             // album tersembunyi → lewati
+  const max=strip.scrollWidth-strip.clientWidth;
+  el.classList.toggle('scrollable',max>4);
+  el.querySelector('.a-arrow.prev').disabled=strip.scrollLeft<=4;
+  el.querySelector('.a-arrow.next').disabled=strip.scrollLeft>=max-4;
+}
+
+// Foto ≤ jumlah kolom yang terlihat → melebar mengisi baris; selebihnya bisa digeser
+function refreshAlbumUI(){
+  const cols=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--cols'))||6;
+  albumList.querySelectorAll('.album').forEach(a=>{
+    a.classList.toggle('fit',parseInt(a.dataset.count,10)<=Math.floor(cols));
+    updateAlbumArrows(a);
+  });
+}
+
+// Geser dengan mouse (drag); di layar sentuh memakai swipe bawaan browser
+function setupStripDrag(strip){
+  let down=false,sx=0,sl=0;
+  strip.addEventListener('pointerdown',e=>{
+    if(e.pointerType!=='mouse'||e.button!==0) return;
+    down=true; strip._dragged=false; sx=e.clientX; sl=strip.scrollLeft;
+  });
+  strip.addEventListener('pointermove',e=>{
+    if(!down) return;
+    const dx=e.clientX-sx;
+    if(!strip._dragged&&Math.abs(dx)>5){ strip._dragged=true; strip.classList.add('dragging'); strip.setPointerCapture(e.pointerId); }
+    if(strip._dragged) strip.scrollLeft=sl-dx;
+  });
+  const end=()=>{ if(!down) return; down=false; strip.classList.remove('dragging'); setTimeout(()=>{strip._dragged=false;},0); };
+  strip.addEventListener('pointerup',end);
+  strip.addEventListener('pointercancel',end);
+}
+
+function createAlbum(item){
+  const n=item.photos.length;
+  const el=document.createElement('section');
+  el.className='album';
+  el.dataset.cat=item.kategori; el.dataset.count=n; el.dataset.id=item.id;
+
+  const head=document.createElement('div'); head.className='album-head';
+  const left=document.createElement('div');
+  const kick=document.createElement('div'); kick.className='album-kicker'; kick.textContent=blogKicker(item);
+  const h=document.createElement('h3'); h.className='album-title'; h.textContent=item.judul;
+  left.append(kick,h);
+
+  const tools=document.createElement('div'); tools.className='album-tools';
+  const cnt=document.createElement('span'); cnt.className='album-count'; cnt.textContent=n+' foto';
+  const mkArrow=(cls,label,txt)=>{const b=document.createElement('button');b.type='button';b.className='a-arrow '+cls;b.setAttribute('aria-label',label);b.textContent=txt;return b;};
+  const prev=mkArrow('prev','Geser ke kiri','‹'), next=mkArrow('next','Geser ke kanan','›');
+  tools.append(cnt,prev,next);
+  head.append(left,tools);
+
+  const strip=document.createElement('div'); strip.className='album-strip';
+  item.photos.forEach((t,i)=>{
+    const b=document.createElement('button'); b.type='button'; b.className='tile';
+    b.setAttribute('aria-label','Buka foto '+(i+1)+' dari '+n+': '+item.judul);
+    const img=document.createElement('img');
+    img.alt=''; img.loading='lazy'; img.decoding='async'; img.draggable=false;
+    img.addEventListener('load',()=>b.classList.add('loaded'));
+    img.addEventListener('error',()=>b.classList.add('failed'));
+    img.src=blogSized(t,'w640');
+    const z=document.createElement('span'); z.className='tile-zoom'; z.textContent='⤢'; z.setAttribute('aria-hidden','true');
+    b.append(img,z);
+    b.addEventListener('click',()=>{ if(!strip._dragged) openViewer(item,i); });
+    strip.appendChild(b);
+  });
+
+  const step=()=>Math.max(strip.clientWidth*0.9,200);
+  const go=dx=>{ if(typeof strip.scrollBy==='function') strip.scrollBy({left:dx,behavior:'smooth'}); else strip.scrollLeft+=dx; };
+  prev.addEventListener('click',()=>go(-step()));
+  next.addEventListener('click',()=>go(step()));
+  strip.addEventListener('scroll',()=>updateAlbumArrows(el),{passive:true});
+  setupStripDrag(strip);
+
+  el.append(head,strip);
+  return el;
+}
+
+/* ── PEMBUKA FOTO: geser/klik/panah keyboard, thumbnail bisa digeser ── */
+const viewer=document.getElementById('viewer');
+const vImg=document.getElementById('v-img');
+const vThumbs=document.getElementById('v-thumbs');
+let vItem=null, vIdx=0;
+
+function openViewer(item,idx){
+  vItem=item;
+  document.getElementById('v-cat').textContent=blogKicker(item);
+  document.getElementById('v-title').textContent=item.judul;
+  const link=document.getElementById('v-link');
+  if(item.url){ link.href=item.url; link.style.display=''; } else { link.removeAttribute('href'); link.style.display='none'; }
+  vThumbs.innerHTML='';
+  item.photos.forEach((t,i)=>{
+    const b=document.createElement('button'); b.type='button'; b.className='v-thumb';
+    b.setAttribute('aria-label','Foto '+(i+1));
+    const im=document.createElement('img'); im.alt=''; im.loading='lazy'; im.src=blogSized(t,'w160-h120-c');
+    b.appendChild(im);
+    b.addEventListener('click',()=>showPhoto(i));
+    vThumbs.appendChild(b);
+  });
+  viewer.classList.toggle('single',item.photos.length<2);
+  viewer.classList.add('open'); viewer.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  showPhoto(idx);
+}
+function showPhoto(i){
+  const n=vItem.photos.length;
+  vIdx=((i%n)+n)%n;
+  vImg.classList.remove('ready');
+  vImg.src=blogSized(vItem.photos[vIdx],'w1600');
+  document.getElementById('v-count').textContent=(vIdx+1)+' / '+n;
+  [...vThumbs.children].forEach((b,k)=>b.classList.toggle('active',k===vIdx));
+  const active=vThumbs.children[vIdx];
+  if(active){
+    const left=active.offsetLeft-(vThumbs.clientWidth-active.clientWidth)/2;
+    if(typeof vThumbs.scrollTo==='function') vThumbs.scrollTo({left:left,behavior:'smooth'}); else vThumbs.scrollLeft=left;
+  }
+  [vIdx+1,vIdx-1].forEach(k=>{ const pre=new Image(); pre.src=blogSized(vItem.photos[((k%n)+n)%n],'w1600'); });
+}
+function closeViewer(){
+  viewer.classList.remove('open'); viewer.setAttribute('aria-hidden','true');
+  document.body.style.overflow=''; vImg.removeAttribute('src'); vItem=null;
+}
+vImg.addEventListener('load',()=>vImg.classList.add('ready'));
+document.getElementById('v-close').addEventListener('click',closeViewer);
+document.getElementById('v-prev').addEventListener('click',()=>showPhoto(vIdx-1));
+document.getElementById('v-next').addEventListener('click',()=>showPhoto(vIdx+1));
+document.getElementById('v-stage').addEventListener('click',e=>{ if(e.target.id==='v-stage') closeViewer(); });
+document.addEventListener('keydown',e=>{
+  if(!viewer.classList.contains('open')) return;
+  if(e.key==='Escape') closeViewer();
+  else if(e.key==='ArrowRight') showPhoto(vIdx+1);
+  else if(e.key==='ArrowLeft') showPhoto(vIdx-1);
+});
+(function(){ // swipe di layar sentuh
+  const stage=document.getElementById('v-stage'); let x0=null;
+  stage.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;},{passive:true});
+  stage.addEventListener('touchend',e=>{
+    if(x0===null) return;
+    const dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(Math.abs(dx)>50&&vItem) showPhoto(vIdx+(dx<0?1:-1));
+  },{passive:true});
+})();
 
 function fetchBlogFeedJsonp(){
   return new Promise((resolve,reject)=>{
@@ -1755,13 +2027,13 @@ async function fetchBlogFeed(){
 }
 
 function renderBlogItems(items){
-  const sig=items.map(i=>i.id).join('|');
+  const sig=items.map(i=>i.id+':'+i.photos.length).join('|');
   if(sig===blogLastSig) return;                       // tidak ada perubahan → tidak perlu render ulang
   blogLastSig=sig;
-  galleryGrid.querySelectorAll('.g-card[data-source="blog"]').forEach(c=>c.remove());
+  albumList.innerHTML='';
   const frag=document.createDocumentFragment();
-  items.forEach(it=>frag.appendChild(createBlogCard(it)));   // urut terbaru → terlama
-  galleryGrid.insertBefore(frag,galleryGrid.firstChild);
+  items.forEach(it=>frag.appendChild(createAlbum(it)));   // urut terbaru → terlama
+  albumList.appendChild(frag);
   applyFilter(currentFilter);
 }
 
@@ -1785,7 +2057,7 @@ async function loadBlogPosts(){
 function loadBlogCache(){
   try{
     const items=JSON.parse(localStorage.getItem(BLOG_CACHE_KEY)||'[]');
-    if(Array.isArray(items)&&items.length) renderBlogItems(items.filter(i=>i&&i.imageUrl&&/^https:\/\//i.test(i.imageUrl)));
+    if(Array.isArray(items)&&items.length) renderBlogItems(items.filter(i=>i&&Array.isArray(i.photos)&&i.photos.length&&i.photos.every(t=>typeof t==='string'&&/^https:\/\//i.test(t))));
   }catch(_){}
 }
 

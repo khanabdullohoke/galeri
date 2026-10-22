@@ -171,6 +171,7 @@ button{font-family:inherit;cursor:pointer}
 .g-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
 .g-card.hidden,.g-card.pg-hidden{display:none}
 .g-card.wide{grid-column:span 2}
+.g-card[data-folder="1"] .g-thumb{cursor:pointer}
 @media(max-width:640px){.g-card.wide{grid-column:span 1}}
 
 /* thumb */
@@ -1190,6 +1191,12 @@ lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
 
 galleryGrid.addEventListener('click',e=>{
+  const delBtn0=e.target.closest('.g-delete-btn');
+  const folderCard=e.target.closest('.g-card[data-folder="1"]');
+  if(folderCard && !delBtn0 && e.target.closest('.g-thumb')){
+    window.open(folderCard.dataset.url,'_blank','noopener,noreferrer');
+    return;
+  }
   const ovBtn=e.target.closest('.g-ov-btn');
   if(ovBtn){
     e.stopPropagation();
@@ -1727,6 +1734,10 @@ function imageCandidates(url,w){
     'https://drive.google.com/uc?export=view&id='+id
   ];
 }
+// Link folder Google Drive (bukan gambar) → kartu langsung mengarah ke Drive
+function isDriveFolderUrl(url){
+  return typeof url==='string' && /^https:\/\/drive\.google\.com\/drive\/(u\/\d+\/)?folders\//i.test(url.trim());
+}
 // Coba kandidat URL satu per satu sampai ada yang berhasil dimuat
 function applyThumbImage(thumbEl,url,onFail){
   const list=imageCandidates(url);
@@ -1765,8 +1776,10 @@ function createCardElement(item){
   const iconSafe=escapeHtml((item.icon||'🖼️').slice(0,8));
   const typeLabel=typeClass==='video'?'🎬 Video':'📸 Foto';
   const videoBadge=typeClass==='video'?'<span class="badge-video">Video</span>':'';
-  const hasImg=isSafeImageUrl(item.imageUrl);
+  const isFolder=isDriveFolderUrl(item.imageUrl);
+  const hasImg=isSafeImageUrl(item.imageUrl) && !isFolder;
   const iconHtml=`<span class="thumb-icon">${iconSafe}</span>`;
+  if(isFolder){ card.dataset.url=item.imageUrl.trim(); card.dataset.folder='1'; }
 
   card.innerHTML=`
     <div class="g-thumb ${catClass}">
@@ -1778,7 +1791,7 @@ function createCardElement(item){
       <div class="g-overlay">
         <div class="g-ov-title">${escapeHtml(item.judul)}</div>
         <div class="g-ov-sub">${catLabel} · ${typeClass==='video'?'Video':'Foto'}</div>
-        <button class="g-ov-btn">Lihat Detail</button>
+        <button class="g-ov-btn">${isFolder?'Buka di Google Drive ↗':'Lihat Detail'}</button>
       </div>
     </div>
     <div class="g-body">
@@ -1791,7 +1804,15 @@ function createCardElement(item){
   // dipakai untuk keluar dari atribut/menyisipkan markup — dan hanya URL https yang diterima.
   if(hasImg){
     const thumbEl=card.querySelector('.g-thumb');
-    applyThumbImage(thumbEl,item.imageUrl);
+    applyThumbImage(thumbEl,item.imageUrl,()=>{
+      console.warn('[Galeri] Foto gagal dimuat. imageUrl dari server =',item.imageUrl);
+      if(/[?&]debug\b/.test(location.search)){
+        const d=document.createElement('div');
+        d.style.cssText='font:11px monospace;color:#c62828;word-break:break-all;margin-top:8px';
+        d.textContent='GAGAL: '+(item.imageUrl||'(imageUrl kosong)');
+        card.querySelector('.g-body').appendChild(d);
+      }
+    });
   }
   return card;
 }

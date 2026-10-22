@@ -1734,9 +1734,9 @@ function imageCandidates(url,w){
     'https://drive.google.com/uc?export=view&id='+id
   ];
 }
-// Link folder Google Drive (bukan gambar) → kartu langsung mengarah ke Drive
-function isDriveFolderUrl(url){
-  return typeof url==='string' && /^https:\/\/drive\.google\.com\/drive\/(u\/\d+\/)?folders\//i.test(url.trim());
+// Semua link Google Drive (folder, file, open?id=) → kartu langsung mengarah ke Drive
+function isDriveLink(url){
+  return typeof url==='string' && /^https:\/\/(drive|docs)\.google\.com\//i.test(url.trim());
 }
 // Coba kandidat URL satu per satu sampai ada yang berhasil dimuat
 function applyThumbImage(thumbEl,url,onFail){
@@ -1776,8 +1776,8 @@ function createCardElement(item){
   const iconSafe=escapeHtml((item.icon||'🖼️').slice(0,8));
   const typeLabel=typeClass==='video'?'🎬 Video':'📸 Foto';
   const videoBadge=typeClass==='video'?'<span class="badge-video">Video</span>':'';
-  const isFolder=isDriveFolderUrl(item.imageUrl);
-  const hasImg=isSafeImageUrl(item.imageUrl) && !isFolder;
+  const isFolder=isDriveLink(item.imageUrl);
+  const hasImg=isSafeImageUrl(item.imageUrl) && (!isFolder || !!extractDriveId(item.imageUrl));
   const iconHtml=`<span class="thumb-icon">${iconSafe}</span>`;
   if(isFolder){ card.dataset.url=item.imageUrl.trim(); card.dataset.folder='1'; }
 

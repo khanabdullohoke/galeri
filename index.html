@@ -1623,7 +1623,7 @@ function renderPendingList(items){
     const iconSafe=escapeHtml((item.icon||'🖼️').slice(0,8));
     const hasImg=isSafeImageUrl(item.imageUrl);
     el.innerHTML=`
-      <div class="pending-thumb">${hasImg?'':iconSafe}</div>
+      <div class="pending-thumb">${iconSafe}</div>
       <div class="pending-body">
         <div class="pending-title">${escapeHtml(item.judul)}</div>
         <div class="pending-meta">${catLabel} · ${typeClass==='video'?'Video':'Foto'} · <span class="role-badge">${escapeHtml(item.pengirimPeran||'-')}</span> ${escapeHtml(item.pengirimNama||'')}</div>
@@ -1634,7 +1634,7 @@ function renderPendingList(items){
       </div>`;
     if(hasImg){
       const thumbEl=el.querySelector('.pending-thumb');
-      thumbEl.style.backgroundImage=`url("${item.imageUrl}")`;
+      applyThumbImage(thumbEl,item.imageUrl);
     }
     list.appendChild(el);
   });
@@ -1704,6 +1704,51 @@ function safeCatClass(cat){ return KNOWN_CATS.includes(cat)?cat:'event'; }
 function safeTypeClass(tipe){ return tipe==='video'?'video':'foto'; }
 function isSafeImageUrl(url){ return typeof url==='string' && /^https:\/\//i.test(url); }
 
+// ── Foto upload manual disimpan di Google Drive. Link Drive (uc?export=view, /file/d/ID/view, open?id=)
+//    sering GAGAL dimuat sebagai gambar, jadi diubah ke bentuk yang bisa ditampilkan. ──
+function extractDriveId(url){
+  if(typeof url!=='string') return null;
+  let m=url.match(/drive\.google\.com\/file\/d\/([\w-]{15,})/i)
+     || url.match(/drive\.google\.com\/(?:uc|open|thumbnail)\?[^#]*\bid=([\w-]{15,})/i)
+     || url.match(/(?:lh3|lh4|lh5|lh6)\.googleusercontent\.com\/d\/([\w-]{15,})/i)
+     || url.match(/docs\.google\.com\/uc\?[^#]*\bid=([\w-]{15,})/i);
+  return m?m[1]:null;
+}
+function imageCandidates(url,w){
+  w=w||1000;
+  if(typeof url!=='string') return [];
+  url=url.trim().replace(/^http:\/\//i,'https://');
+  if(!isSafeImageUrl(url)) return [];
+  const id=extractDriveId(url);
+  if(!id) return [url];
+  return [
+    'https://lh3.googleusercontent.com/d/'+id+'=w'+w,
+    'https://drive.google.com/thumbnail?id='+id+'&sz=w'+w,
+    'https://drive.google.com/uc?export=view&id='+id
+  ];
+}
+// Coba kandidat URL satu per satu sampai ada yang berhasil dimuat
+function applyThumbImage(thumbEl,url,onFail){
+  const list=imageCandidates(url);
+  let i=0;
+  const tryNext=()=>{
+    if(i>=list.length){ if(onFail) onFail(); return; }
+    const src=list[i++];
+    const probe=new Image();
+    probe.referrerPolicy='no-referrer';
+    probe.onload=()=>{
+      thumbEl.style.backgroundImage='url("'+src+'")';
+      thumbEl.style.backgroundSize='cover';
+      thumbEl.style.backgroundPosition='center';
+      thumbEl.style.backgroundRepeat='no-repeat';
+      const ic=thumbEl.querySelector('.thumb-icon'); if(ic) ic.style.display='none';
+    };
+    probe.onerror=tryNext;
+    probe.src=src;
+  };
+  tryNext();
+}
+
 function createCardElement(item){
   const card=document.createElement('div');
   card.className='g-card';
@@ -1721,7 +1766,7 @@ function createCardElement(item){
   const typeLabel=typeClass==='video'?'🎬 Video':'📸 Foto';
   const videoBadge=typeClass==='video'?'<span class="badge-video">Video</span>':'';
   const hasImg=isSafeImageUrl(item.imageUrl);
-  const iconHtml=hasImg?'':`<span class="thumb-icon">${iconSafe}</span>`;
+  const iconHtml=`<span class="thumb-icon">${iconSafe}</span>`;
 
   card.innerHTML=`
     <div class="g-thumb ${catClass}">
@@ -1746,9 +1791,7 @@ function createCardElement(item){
   // dipakai untuk keluar dari atribut/menyisipkan markup — dan hanya URL https yang diterima.
   if(hasImg){
     const thumbEl=card.querySelector('.g-thumb');
-    thumbEl.style.backgroundImage=`url("${item.imageUrl}")`;
-    thumbEl.style.backgroundSize='cover';
-    thumbEl.style.backgroundPosition='center';
+    applyThumbImage(thumbEl,item.imageUrl);
   }
   return card;
 }
